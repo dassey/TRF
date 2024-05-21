@@ -5,7 +5,7 @@ document.getElementById('travel-form').addEventListener('submit', async function
     const formData = new FormData(event.target);
 
     // Load PDF document
-    const existingPdfBytes = await fetch('/path/to/13360_HST_MASSEYD_07_13_2024.pdf').then(res => res.arrayBuffer());
+    const existingPdfBytes = await fetch('Blank.pdf').then(res => res.arrayBuffer());
     const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
 
     const form = pdfDoc.getForm();
