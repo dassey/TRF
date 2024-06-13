@@ -7,7 +7,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Align at the top */
     height: 100vh;
     overflow: auto;  /* Allow scrolling if content overflows */
 }
@@ -26,6 +26,7 @@ form {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 20px;
+    overflow-y: auto;
 }
 
 form h2 {
@@ -85,4 +86,3 @@ button:hover {
         grid-template-columns: 1fr;
     }
 }
-
