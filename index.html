@@ -5,127 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Travel Request Form</title>
     <link rel="stylesheet" href="styles.css">
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
 </head>
 <body>
     <div class="container">
-        <form id="travel-form">
+        <form id="travelRequestForm">
             <h2>Travel Request Form</h2>
-            <label for="travelerName">Traveler Name</label>
-            <input type="text" id="travelerName" name="travelerName" required>
-
-            <label for="employeeNumber">Employee #</label>
-            <input type="text" id="employeeNumber" name="employeeNumber" required>
-
-            <label for="travelerPhone">Traveler Phone Number</label>
-            <input type="tel" id="travelerPhone" name="travelerPhone" required>
-
-            <label for="homeMTC">Home MTC</label>
-            <input type="text" id="homeMTC" name="homeMTC" required>
-
-            <label for="travelerEmail">Traveler Email</label>
-            <input type="email" id="travelerEmail" name="travelerEmail" required>
-
-            <label for="finalDestination">Final Destination</label>
-            <input type="text" id="finalDestination" name="finalDestination" required>
-
-            <label for="eventDateRange">Event Date Range</label>
-            <input type="text" id="eventDateRange" name="eventDateRange" required>
-
-            <label for="eventChargeNumber">Event Charge Number</label>
-            <input type="text" id="eventChargeNumber" name="eventChargeNumber" required>
-
-            <label for="eafUUID">EAF UUID #</label>
-            <input type="text" id="eafUUID" name="eafUUID" required>
-
-            <label for="otherAttendees">Other Attendees</label>
-            <input type="text" id="otherAttendees" name="otherAttendees" required>
-
-            <label for="transportationType">Type of Transportation Request</label>
-            <select id="transportationType" name="transportationType" required>
-                <option value="air">Air</option>
-                <option value="car">Car</option>
-            </select>
-
-            <label for="departureDate">Departure Date</label>
-            <input type="date" id="departureDate" name="departureDate" required>
-
-            <label for="departureAirport">Departure Airport</label>
-            <input type="text" id="departureAirport" name="departureAirport" required>
-
-            <label for="departureTime">Departure Time</label>
-            <input type="time" id="departureTime" name="departureTime" required>
-
-            <label for="departureFlight">Flight(s)</label>
-            <input type="text" id="departureFlight" name="departureFlight" required>
-
-            <label for="arrivalAirport">Arrival Airport</label>
-            <input type="text" id="arrivalAirport" name="arrivalAirport" required>
-
-            <label for="arrivalTime">Arrival Time</label>
-            <input type="time" id="arrivalTime" name="arrivalTime" required>
-
-            <label for="returnDate">Return Date</label>
-            <input type="date" id="returnDate" name="returnDate" required>
-
-            <label for="returnAirport">Return Airport</label>
-            <input type="text" id="returnAirport" name="returnAirport" required>
-
-            <label for="returnTime">Return Time</label>
-            <input type="time" id="returnTime" name="returnTime" required>
-
-            <label for="returnFlight">Return Flight(s)</label>
-            <input type="text" id="returnFlight" name="returnFlight" required>
-
-            <label for="hotelRequest">Is Hotel Requested?</label>
-            <select id="hotelRequest" name="hotelRequest" required>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
-
-            <label for="hotelCheckIn">Check In Date</label>
-            <input type="date" id="hotelCheckIn" name="hotelCheckIn">
-
-            <label for="hotelCheckOut">Check Out Date</label>
-            <input type="date" id="hotelCheckOut" name="hotelCheckOut">
-
-            <label for="passengers">Number of Passengers</label>
-            <input type="number" id="passengers" name="passengers">
-
-            <label for="specificRequirements">Specific Requirements</label>
-            <textarea id="specificRequirements" name="specificRequirements"></textarea>
-
-            <label for="carPickUp">Car Pick Up Date</label>
-            <input type="date" id="carPickUp" name="carPickUp">
-
-            <label for="carDropOff">Car Drop Off Date</label>
-            <input type="date" id="carDropOff" name="carDropOff">
-
-            <label for="additionalRequests">Additional Requests/Notes</label>
-            <textarea id="additionalRequests" name="additionalRequests"></textarea>
-
-            <label for="povCost">POV Cost</label>
-            <input type="text" id="povCost" name="povCost">
-
-            <label for="departureCity">Departure City</label>
-            <input type="text" id="departureCity" name="departureCity">
-
-            <label for="arrivalCity">Arrival City</label>
-            <input type="text" id="arrivalCity" name="arrivalCity">
-
-            <label for="oneWayMileage">One Way Mileage</label>
-            <input type="text" id="oneWayMileage" name="oneWayMileage">
-
-            <label for="roundTripMileage">Round Trip Mileage</label>
-            <input type="text" id="roundTripMileage" name="roundTripMileage">
-
-            <label for="currentMileageRate">Current Mileage Rate</label>
-            <input type="text" id="currentMileageRate" name="currentMileageRate">
-
-            <label for="airfareQuote">Airfare Quote</label>
-            <input type="text" id="airfareQuote" name="airfareQuote">
-
+            <div>
+                <label for="travelerName">Traveler Name</label>
+                <input type="text" id="travelerName" name="travelerName">
+            </div>
+            <div>
+                <label for="employeeNumber">Employee Number</label>
+                <input type="text" id="employeeNumber" name="employeeNumber">
+            </div>
+            <div>
+                <label for="travelerEmail">Traveler Email</label>
+                <input type="email" id="travelerEmail" name="travelerEmail">
+            </div>
+            <div>
+                <label for="travelerPhone">Traveler Phone Number</label>
+                <input type="tel" id="travelerPhone" name="travelerPhone">
+            </div>
+            <div>
+                <label for="homeMTC">Home MTC</label>
+                <input type="text" id="homeMTC" name="homeMTC">
+            </div>
+            <div>
+                <label for="eventSummary">Event Summary</label>
+                <input type="text" id="eventSummary" name="eventSummary">
+            </div>
+            <div>
+                <label for="uid">UID</label>
+                <input type="text" id="uid" name="uid">
+            </div>
+            <div>
+                <label for="eventStartDate">Event Start Date</label>
+                <input type="date" id="eventStartDate" name="eventStartDate">
+            </div>
+            <div>
+                <label for="eventEndDate">Event End Date</label>
+                <input type="date" id="eventEndDate" name="eventEndDate">
+            </div>
+            <div>
+                <label for="location">Location</label>
+                <input type="text" id="location" name="location">
+            </div>
+            <div>
+                <label>Travel Requirements</label>
+                <div>
+                    <input type="checkbox" id="airReservation" name="travelRequirements" value="Air Reservation">
+                    <label for="airReservation">Air Reservation</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="hotelReservation" name="travelRequirements" value="Hotel Reservation">
+                    <label for="hotelReservation">Hotel Reservation</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="carRental" name="travelRequirements" value="Car Rental">
+                    <label for="carRental">Car Rental</label>
+                </div>
+            </div>
+            <!-- More fields as per the PDF structure -->
             <button type="submit">Submit</button>
         </form>
     </div>
