@@ -1,5 +1,5 @@
 // script.js
-document.getElementById('travel-form').addEventListener('submit', async function (event) {
+document.getElementById('travelRequestForm').addEventListener('submit', async function (event) {
     event.preventDefault();
 
     const formData = new FormData(event.target);
@@ -40,13 +40,6 @@ document.getElementById('travel-form').addEventListener('submit', async function
     form.getTextField('Car Pick Up').setText(formData.get('carPickUp'));
     form.getTextField('Car Drop Off').setText(formData.get('carDropOff'));
     form.getTextField('Additional Requests/Notes').setText(formData.get('additionalRequests'));
-    form.getTextField('POV Cost').setText(formData.get('povCost'));
-    form.getTextField('Dpt City').setText(formData.get('departureCity'));
-    form.getTextField('Arr City').setText(formData.get('arrivalCity'));
-    form.getTextField('One Way Mileage').setText(formData.get('oneWayMileage'));
-    form.getTextField('Round Trip Mileage').setText(formData.get('roundTripMileage'));
-    form.getTextField('Current Mileage Rate').setText(formData.get('currentMileageRate'));
-    form.getTextField('Airfare Quote').setText(formData.get('airfareQuote'));
 
     // Serialize the PDF document to bytes (a Uint8Array)
     const pdfBytes = await pdfDoc.save();
