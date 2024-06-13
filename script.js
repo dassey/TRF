@@ -35,6 +35,8 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
     form.getTextField('hot_in').setText(formData.get('hotelCheckIn'));
     form.getTextField('hot_out').setText(formData.get('hotelCheckOut'));
     form.getTextField('rent_pass').setText(formData.get('passengers'));
+    form.getTextField('rent_puckup_loc').setText(formData.get('returnAirport'));
+
     form.getTextField('rent_comments').setText(formData.get('specificRequirements'));
     form.getTextField('rent_pickup_day').setText(formData.get('carPickUp'));
     form.getTextField('rent_dropoff').setText(formData.get('carDropOff'));
