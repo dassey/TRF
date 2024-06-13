@@ -32,6 +32,7 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
     form.getTextField('rtn_air').setText(formData.get('returnAirport'));
     form.getTextField('rtn_time').setText(formData.get('returnTime'));
     form.getTextField('rtn_flights').setText(formData.get('returnFlight'));
+    form.getTextField('hot_name').setText(formData.get('hotname'));
     form.getTextField('hot_in').setText(formData.get('hotelCheckIn'));
     form.getTextField('hot_out').setText(formData.get('hotelCheckOut'));
     form.getTextField('rent_pass').setText(formData.get('passengers'));
