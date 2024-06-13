@@ -143,9 +143,15 @@
 
             <div>
                 <label for="passengers">Number of Passengers</label>
-                <input type="number" id="passengers" name="passengers">
+                <select id="passengers" name="passengers" required>
+                    <option value="">Select number of passengers</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                </select>
             </div>
-            
+
             <div class="full-width">
                 <label for="specificRequirements">Specific Requirements</label>
                 <textarea id="specificRequirements" name="specificRequirements"></textarea>
