@@ -11,121 +11,195 @@
     <div class="container">
         <form id="travelRequestForm">
             <h2>Travel Request Form</h2>
-            <label for="travelerName">Traveler Name</label>
-            <input type="text" id="travelerName" name="travelerName" required>
+            <div class="full-width">
+                <label for="travelerName">Traveler Name</label>
+                <input type="text" id="travelerName" name="travelerName" required>
+            </div>
 
-            <label for="employeeNumber">Employee #</label>
-            <input type="text" id="employeeNumber" name="employeeNumber" required>
+            <div class="full-width">
+                <label for="employeeNumber">Employee #</label>
+                <input type="text" id="employeeNumber" name="employeeNumber" required>
+            </div>
 
-            <label for="travelerPhone">Traveler Phone Number</label>
-            <input type="tel" id="travelerPhone" name="travelerPhone" required>
+            <div>
+                <label for="travelerPhone">Traveler Phone Number</label>
+                <input type="tel" id="travelerPhone" name="travelerPhone" required>
+            </div>
 
-            <label for="homeMTC">Home MTC</label>
-            <input type="text" id="homeMTC" name="homeMTC" required>
+            <div>
+                <label for="homeMTC">Home MTC</label>
+                <input type="text" id="homeMTC" name="homeMTC" required>
+            </div>
 
-            <label for="travelerEmail">Traveler Email</label>
-            <input type="email" id="travelerEmail" name="travelerEmail" required>
+            <div class="full-width">
+                <label for="travelerEmail">Traveler Email</label>
+                <input type="email" id="travelerEmail" name="travelerEmail" required>
+            </div>
 
-            <label for="finalDestination">Final Destination</label>
-            <input type="text" id="finalDestination" name="finalDestination" required>
+            <div class="full-width">
+                <label for="finalDestination">Final Destination</label>
+                <input type="text" id="finalDestination" name="finalDestination" required>
+            </div>
 
-            <label for="eventDateRange">Event Date Range</label>
-            <input type="text" id="eventDateRange" name="eventDateRange" required>
+            <div>
+                <label for="eventDateRange">Event Date Range</label>
+                <input type="text" id="eventDateRange" name="eventDateRange" required>
+            </div>
 
-            <label for="eventChargeNumber">Event Charge Number</label>
-            <input type="text" id="eventChargeNumber" name="eventChargeNumber" required>
+            <div>
+                <label for="eventChargeNumber">Event Charge Number</label>
+                <input type="text" id="eventChargeNumber" name="eventChargeNumber" required>
+            </div>
 
-            <label for="eafUUID">EAF UUID #</label>
-            <input type="text" id="eafUUID" name="eafUUID" required>
+            <div class="full-width">
+                <label for="eafUUID">EAF UUID #</label>
+                <input type="text" id="eafUUID" name="eafUUID" required>
+            </div>
 
-            <label for="otherAttendees">Other Attendees</label>
-            <input type="text" id="otherAttendees" name="otherAttendees" required>
+            <div class="full-width">
+                <label for="otherAttendees">Other Attendees</label>
+                <input type="text" id="otherAttendees" name="otherAttendees" required>
+            </div>
 
-            <label for="transportationType">Type of Transportation Request</label>
-            <select id="transportationType" name="transportationType" required>
-                <option value="air">Air</option>
-                <option value="car">Car</option>
-            </select>
+            <div>
+                <label for="transportationType">Type of Transportation Request</label>
+                <select id="transportationType" name="transportationType" required>
+                    <option value="air">Air</option>
+                    <option value="car">Car</option>
+                </select>
+            </div>
 
-            <label for="departureDate">Departure Date</label>
-            <input type="date" id="departureDate" name="departureDate" required>
+            <div>
+                <label for="departureDate">Departure Date</label>
+                <input type="date" id="departureDate" name="departureDate" required>
+            </div>
 
-            <label for="departureAirport">Departure Airport</label>
-            <input type="text" id="departureAirport" name="departureAirport" required>
+            <div>
+                <label for="departureAirport">Departure Airport</label>
+                <input type="text" id="departureAirport" name="departureAirport" required>
+            </div>
 
-            <label for="departureTime">Departure Time</label>
-            <input type="time" id="departureTime" name="departureTime" required>
+            <div>
+                <label for="departureTime">Departure Time</label>
+                <input type="time" id="departureTime" name="departureTime" required>
+            </div>
 
-            <label for="departureFlight">Flight(s)</label>
-            <input type="text" id="departureFlight" name="departureFlight" required>
+            <div>
+                <label for="departureFlight">Flight(s)</label>
+                <input type="text" id="departureFlight" name="departureFlight" required>
+            </div>
 
-            <label for="arrivalAirport">Arrival Airport</label>
-            <input type="text" id="arrivalAirport" name="arrivalAirport" required>
+            <div>
+                <label for="arrivalAirport">Arrival Airport</label>
+                <input type="text" id="arrivalAirport" name="arrivalAirport" required>
+            </div>
 
-            <label for="arrivalTime">Arrival Time</label>
-            <input type="time" id="arrivalTime" name="arrivalTime" required>
+            <div>
+                <label for="arrivalTime">Arrival Time</label>
+                <input type="time" id="arrivalTime" name="arrivalTime" required>
+            </div>
 
-            <label for="returnDate">Return Date</label>
-            <input type="date" id="returnDate" name="returnDate" required>
+            <div>
+                <label for="returnDate">Return Date</label>
+                <input type="date" id="returnDate" name="returnDate" required>
+            </div>
 
-            <label for="returnAirport">Return Airport</label>
-            <input type="text" id="returnAirport" name="returnAirport" required>
+            <div>
+                <label for="returnAirport">Return Airport</label>
+                <input type="text" id="returnAirport" name="returnAirport" required>
+            </div>
 
-            <label for="returnTime">Return Time</label>
-            <input type="time" id="returnTime" name="returnTime" required>
+            <div>
+                <label for="returnTime">Return Time</label>
+                <input type="time" id="returnTime" name="returnTime" required>
+            </div>
 
-            <label for="returnFlight">Return Flight(s)</label>
-            <input type="text" id="returnFlight" name="returnFlight" required>
+            <div>
+                <label for="returnFlight">Return Flight(s)</label>
+                <input type="text" id="returnFlight" name="returnFlight" required>
+            </div>
 
-            <label for="hotelRequest">Is Hotel Requested?</label>
-            <select id="hotelRequest" name="hotelRequest" required>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-            </select>
+            <div>
+                <label for="hotelRequest">Is Hotel Requested?</label>
+                <select id="hotelRequest" name="hotelRequest" required>
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                </select>
+            </div>
 
-            <label for="hotelCheckIn">Check In Date</label>
-            <input type="date" id="hotelCheckIn" name="hotelCheckIn">
+            <div>
+                <label for="hotelCheckIn">Check In Date</label>
+                <input type="date" id="hotelCheckIn" name="hotelCheckIn">
+            </div>
 
-            <label for="hotelCheckOut">Check Out Date</label>
-            <input type="date" id="hotelCheckOut" name="hotelCheckOut">
+            <div>
+                <label for="hotelCheckOut">Check Out Date</label>
+                <input type="date" id="hotelCheckOut" name="hotelCheckOut">
+            </div>
 
-            <label for="passengers">Number of Passengers</label>
-            <input type="number" id="passengers" name="passengers">
+            <div>
+                <label for="passengers">Number of Passengers</label>
+                <input type="number" id="passengers" name="passengers">
+            </div>
 
-            <label for="specificRequirements">Specific Requirements</label>
-            <textarea id="specificRequirements" name="specificRequirements"></textarea>
+            <div class="full-width">
+                <label for="specificRequirements">Specific Requirements</label>
+                <textarea id="specificRequirements" name="specificRequirements"></textarea>
+            </div>
 
-            <label for="carPickUp">Car Pick Up Date</label>
-            <input type="date" id="carPickUp" name="carPickUp">
+            <div>
+                <label for="carPickUp">Car Pick Up Date</label>
+                <input type="date" id="carPickUp" name="carPickUp">
+            </div>
 
-            <label for="carDropOff">Car Drop Off Date</label>
-            <input type="date" id="carDropOff" name="carDropOff">
+            <div>
+                <label for="carDropOff">Car Drop Off Date</label>
+                <input type="date" id="carDropOff" name="carDropOff">
+            </div>
 
-            <label for="additionalRequests">Additional Requests/Notes</label>
-            <textarea id="additionalRequests" name="additionalRequests"></textarea>
+            <div class="full-width">
+                <label for="additionalRequests">Additional Requests/Notes</label>
+                <textarea id="additionalRequests" name="additionalRequests"></textarea>
+            </div>
 
-            <label for="povCost">POV Cost</label>
-            <input type="text" id="povCost" name="povCost">
+            <div>
+                <label for="povCost">POV Cost</label>
+                <input type="text" id="povCost" name="povCost">
+            </div>
 
-            <label for="departureCity">Departure City</label>
-            <input type="text" id="departureCity" name="departureCity">
+            <div>
+                <label for="departureCity">Departure City</label>
+                <input type="text" id="departureCity" name="departureCity">
+            </div>
 
-            <label for="arrivalCity">Arrival City</label>
-            <input type="text" id="arrivalCity" name="arrivalCity">
+            <div>
+                <label for="arrivalCity">Arrival City</label>
+                <input type="text" id="arrivalCity" name="arrivalCity">
+            </div>
 
-            <label for="oneWayMileage">One Way Mileage</label>
-            <input type="text" id="oneWayMileage" name="oneWayMileage">
+            <div>
+                <label for="oneWayMileage">One Way Mileage</label>
+                <input type="text" id="oneWayMileage" name="oneWayMileage">
+            </div>
 
-            <label for="roundTripMileage">Round Trip Mileage</label>
-            <input type="text" id="roundTripMileage" name="roundTripMileage">
+            <div>
+                <label for="roundTripMileage">Round Trip Mileage</label>
+                <input type="text" id="roundTripMileage" name="roundTripMileage">
+            </div>
 
-            <label for="currentMileageRate">Current Mileage Rate</label>
-            <input type="text" id="currentMileageRate" name="currentMileageRate">
+            <div>
+                <label for="currentMileageRate">Current Mileage Rate</label>
+                <input type="text" id="currentMileageRate" name="currentMileageRate">
+            </div>
 
-            <label for="airfareQuote">Airfare Quote</label>
-            <input type="text" id="airfareQuote" name="airfareQuote">
+            <div class="full-width">
+                <label for="airfareQuote">Airfare Quote</label>
+                <input type="text" id="airfareQuote" name="airfareQuote">
+            </div>
 
-            <button type="submit">Submit</button>
+            <div class="button-container">
+                <button type="submit">Submit</button>
+            </div>
         </form>
     </div>
     <script src="script.js"></script>
