@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Request Form</title>
+    <style>
+        body {
+            background-color: #2c2c2e;
+            color: #333;
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            overflow: auto;
+        }
+
+        .container {
+            max-width: 900px;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            overflow-y: auto;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            overflow-y: auto;
+        }
+
+        form h2 {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .section-header {
+            grid-column: 1 / -1;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-top: 20px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .section-subheader {
+            grid-column: 1 / -1;
+            font-size: 1em;
+            font-weight: bold;
+            color: #333;
+            margin-top: 10px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            grid-column: 1 / -1;
+            justify-content: space-between;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+            white-space: nowrap;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 3px;
+            transform: scale(1.2);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .button-container {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .home-mtc-container {
+            grid-column: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .row-container {
+            grid-column: 1 / -1;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+
+        .row-container label {
+            width: 100%;
+        }
+
+        .even-spread {
+            flex: 1;
+        }
+
+        .input-group-row {
+            grid-column: 1 / -1;
+            display: none;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .input-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .input-group label {
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .input-group input,
+        .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        /* Hide sections by default */
+        #AirSection,
+        #CarSection,
+        #HotelSection {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <form id="travelRequestForm">
+            <h2>Travel Request Form</h2>
+
+            <!-- Section: Traveler Information -->
+            <div class="section-header">Traveler Information</div>
+
+            <div class="home-mtc-container">
+                <label for="homeMTC">Home MTC</label>
+                <select id="homeMTC" name="homeMTC">
+                    <option value="LVN">LVN</option>
+                    <option value="CHF">CHF</option>
+                    <option value="DGE">DGE</option>
+                    <option value="FIG">FIG</option>
+                    <option value="GOW">GOW</option>
+                </select>
+            </div>
+
+            <div class="row-container">
+                <div class="even-spread">
+                    <label for="travelerName">Name</label>
+                    <input type="text" id="travelerName" name="travelerName">
+                </div>
+                <div class="even-spread">
+                    <label for="employeeNumber">Employee Number</label>
+                    <input type="text" id="employeeNumber" name="employeeNumber">
+                </div>
+            </div>
+
+            <div class="row-container">
+                <div class="even-spread">
+                    <label for="travelerEmail">E-mail</label>
+                    <input type="email" id="travelerEmail" name="travelerEmail">
+                </div>
+                <div class="even-spread">
+                    <label for="travelerPhone">Phone</label>
+                    <input type="text" id="travelerPhone" name="travelerPhone">
+                </div>
+            </div>
+
+            <!-- Section: Event Summary -->
+            <div class="section-header">Event Summary</div>
+            <div class="row-container">
+                <div class="even-spread">
+                    <label for="TrainingLocation">Training Location</label>
+                    <input type="text" id="TrainingLocation" name="TrainingLocation">
+                </div>
+                <div class="even-spread">
+                    <label for="UID">UID</label>
+                    <input type="text" id="UID" name="UID">
+                </div>
+            </div>
+
+            <div class="row-container">
+                <div class="even-spread">
+                    <label for="TravelStart">Travel Start Date</label>
+                    <input type="date" id="TravelStart" name="TravelStart">
+                </div>
+                <div class="even-spread">
+                    <label for="TravelEnd">Travel End Date</label>
+                    <input type="date" id="TravelEnd" name="TravelEnd">
+                </div>
+            </div>
+
+            <!-- Section: Travel Requirements -->
+            <div class="section-header">Travel Requirements</div>
+            <div class="checkbox-group">
+                <label><input type="checkbox" id="AirReservation" name="AirReservation"> Air</label>
+                <label><input type="checkbox" id="HotelReservation" name="HotelReservation"> Hotel</label>
+                <label><input type="checkbox" id="CarRental" name="CarRental"> Car</label>
+                <label><input type="checkbox" id="POV" name="POV"> POV</label>
+                <label><input type="checkbox" id="ETP" name="ETP"> ETP</label>
+                <label><input type="checkbox" id="B2B" name="B2B"> B2B</label>
+            </div>
+
+            <div class="input-group-row">
+                <div id="ETPContainer" class="input-group" style="display: none;">
+                    <label for="ETPDropdown">ETP Type</label>
+                    <select id="ETPDropdown" name="ETPDropdown">
+                        <option value=""></option>
+                        <option value="PerDiem">Per Diem</option>
+                        <option value="RentalVehicle">Rental Vehicle</option>
+                        <option value="Baggage">Baggage</option>
+                        <option value="Prepositioning">Prepositioning</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div id="B2BContainer" class="input-group" style="display: none;">
+                    <label for="B2BUID">B2B UID</label>
+                    <input type="text" id="B2BUID" name="B2BUID">
+                </div>
+            </div>
+
+            <!-- Air Reservation Section -->
+            <div id="AirSection">
+                <div class="section-header">Air Reservation</div>
+                <!-- Depart -->
+                <div class="section-subheader">Depart</div>
+                <div class="row-container">
+                    <div class="checkbox-item" style="display: flex; align-items: center;">
+                        <input type="checkbox" id="RoundTrip" name="RoundTrip">
+                        <label for="RoundTrip">Round Trip</label>
+                    </div>
+                    <div class="checkbox-item" style="display: flex; align-items: center;">
+                        <input type="checkbox" id="OneWay" name="OneWay">
+                        <label for="OneWay">One Way</label>
+                    </div>
+                </div>
+
+                <label for="DepLocation">Depart Airport</label>
+                <input type="text" id="DepLocation" name="DepLocation">
+
+                <label for="DepAirline">Preferred Airline</label>
+                <input type="text" id="DepAirline" name="DepAirline">
+
+                <label for="DepArrLocation">Arrive Location</label>
+                <input type="text" id="DepArrLocation" name="DepArrLocation">
+
+                <label for="DepDate">Date</label>
+                <input type="date" id="DepDate" name="DepDate">
+
+                <label for="DepTime">Depart Time</label>
+                <input type="time" id="DepTime" name="DepTime">
+
+                <label for="DepArrTime">Arrive Time</label>
+                <input type="time" id="DepArrTime" name="DepArrTime">
+
+                <label for="DepFlight">Preferred Flight#</label>
+                <input type="text" id="DepFlight" name="DepFlight">
+
+                <label for="AirNotes">Air Notes</label>
+                <input type="text" id="AirNotes" name="AirNotes">
+
+                <!-- Return -->
+                <div class="section-subheader">Return</div>
+                <label for="RetAirline">Preferred Airline</label>
+                <input type="text" id="RetAirline" name="RetAirline">
+
+                <label for="RetDepLocation">Depart Airport</label>
+                <input type="text" id="RetDepLocation" name="RetDepLocation">
+
+                <label for="RetDepDate">Date</label>
+                <input type="date" id="RetDepDate" name="RetDepDate">
+
+                <label for="RetArrLocation">Arrive Airport</label>
+                <input type="text" id="RetArrLocation" name="RetArrLocation">
+
+                <label for="RetFlight">Preferred Flight#</label>
+                <input type="text" id="RetFlight" name="RetFlight">
+
+                <label for="RetDepTime">Depart Time</label>
+                <input type="time" id="RetDepTime" name="RetDepTime">
+
+                <label for="RetArrTime">Arrive Time</label>
+                <input type="time" id="RetArrTime" name="RetArrTime">
+            </div>
+
+            <!-- Car Rental Section -->
+            <div id="CarSection">
+                <div class="section-header">Car Rental</div>
+                <div class="checkbox-group">
+                    <label><input type="checkbox" id="OneWayCar" name="OneWayCar"> One Way</label>
+                </div>
+
+                <label for="CarPickUp">Pickup Location</label>
+                <input type="text" id="CarPickUp" name="CarPickUp">
+
+                <label for="CarDate">Pickup Date</label>
+                <input type="date" id="CarDate" name="CarDate">
+
+                <label for="CarPUTime">Time</label>
+                <input type="time" id="CarPUTime" name="CarPUTime">
+
+                <label for="CarDrop">Drop Off Location</label>
+                <input type="text" id="CarDrop" name="CarDrop">
+
+                <label for="CarDropDate">Drop Off Date</label>
+                <input type="date" id="CarDropDate" name="CarDropDate">
+
+                <label for="CarDropTime">Time</label>
+                <input type="time" id="CarDropTime" name="CarDropTime">
+
+                <label for="CarNotes">Car Notes</label>
+                <input type="text" id="CarNotes" name="CarNotes">
+            </div>
+
+            <!-- Hotel Section -->
+            <div id="HotelSection">
+                <div class="section-header">Hotel</div>
+                <label for="TravelerBookedHotel">Traveler Booked Hotel?</label>
+                <select id="TravelerBookedHotel" name="TravelerBookedHotel">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+
+                <label for="HotelCheckIn">Check-in Date</label>
+                <input type="date" id="HotelCheckIn" name="HotelCheckIn">
+
+                <label for="HotelCheckOut">Check Out Date</label>
+                <input type="date" id="HotelCheckOut" name="HotelCheckOut">
+
+                <label for="ReservNumber">Reservation#</label>
+                <input type="text" id="ReservNumber" name="ReservNumber">
+
+                <label for="HotelLocation">Location</label>
+                <input type="text" id="HotelLocation" name="HotelLocation">
+
+                <label for="HotelNotes">Hotel Notes</label>
+                <input type="text" id="HotelNotes" name="HotelNotes">
+            </div>
+
+            <!-- Section: Comments -->
+            <div class="section-header">Comments</div>
+            <label for="Comments">Comments</label>
+            <textarea id="Comments" name="Comments"></textarea>
+
+            <!-- Submit Button -->
+            <div class="button-container">
+                <button type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Include PDFLib library -->
+    <script src="https://unpkg.com/pdf-lib/dist/pdf-lib.min.js"></script>
+
+    <script>
+        // Existing JavaScript code for showing/hiding sections
+
+        function updateInputGroupRowDisplay() {
+            const etpContainer = document.getElementById('ETPContainer');
+            const b2bContainer = document.getElementById('B2BContainer');
+            const inputGroupRow = document.querySelector('.input-group-row');
+
+            // Show the input-group-row if any child is visible
+            if (etpContainer.style.display !== 'none' || b2bContainer.style.display !== 'none') {
+                inputGroupRow.style.display = 'flex';
+            } else {
+                inputGroupRow.style.display = 'none';
+            }
+        }
+
+        // ETP and B2B checkbox listeners
+        document.getElementById('ETP').addEventListener('change', function() {
+            const etpContainer = document.getElementById('ETPContainer');
+            etpContainer.style.display = this.checked ? 'flex' : 'none';
+            updateInputGroupRowDisplay();
+        });
+
+        document.getElementById('B2B').addEventListener('change', function() {
+            const b2bContainer = document.getElementById('B2BContainer');
+            b2bContainer.style.display = this.checked ? 'flex' : 'none';
+            updateInputGroupRowDisplay();
+        });
+
+        // Show/Hide Sections Based on Checkboxes
+        document.getElementById('AirReservation').addEventListener('change', function() {
+            const airSection = document.getElementById('AirSection');
+            airSection.style.display = this.checked ? 'block' : 'none';
+        });
+
+        document.getElementById('CarRental').addEventListener('change', function() {
+            const carSection = document.getElementById('CarSection');
+            carSection.style.display = this.checked ? 'block' : 'none';
+        });
+
+        document.getElementById('HotelReservation').addEventListener('change', function() {
+            const hotelSection = document.getElementById('HotelSection');
+            hotelSection.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Initialize sections based on checkbox states on page load
+        window.addEventListener('load', function() {
+            // Trigger change events to set initial visibility
+            document.getElementById('AirReservation').dispatchEvent(new Event('change'));
+            document.getElementById('CarRental').dispatchEvent(new Event('change'));
+            document.getElementById('HotelReservation').dispatchEvent(new Event('change'));
+            updateInputGroupRowDisplay();
+        });
+
+        // Handle form submission and PDF generation
+        document.getElementById('travelRequestForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const formData = new FormData(event.target);
+
+            try {
+                // Load PDF document from 'MyFile.pdf'
+                const existingPdfBytes = await fetch('MyFile.pdf').then(res => res.arrayBuffer());
+                const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+
+                const form = pdfDoc.getForm();
+
+                // Map all form fields
+
+                // Traveler Information
+                form.getTextField('Name').setText(formData.get('travelerName') || '');
+                form.getTextField('Employee#').setText(formData.get('employeeNumber') || '');
+                form.getTextField('Phone').setText(formData.get('travelerPhone') || '');
+                form.getTextField('Email').setText(formData.get('travelerEmail') || '');
+                form.getDropdown('Dropdown46').select(formData.get('homeMTC') || '');
+
+                // Event Summary
+                form.getTextField('Training Location').setText(formData.get('TrainingLocation') || '');
+                form.getTextField('UID').setText(formData.get('UID') || '');
+                form.getTextField('Travel Start').setText(formData.get('TravelStart') || '');
+                form.getTextField('Travel End').setText(formData.get('TravelEnd') || '');
+
+                // Travel Requirements Checkboxes
+                const travelRequirements = ['Air Reservation', 'Hotel Reservation', 'Car Rental', 'POV', 'ETP', 'B2B'];
+                travelRequirements.forEach(req => {
+                    // Adjust the formData key by removing spaces and replacing with empty string
+                    const formDataKey = req.replace(/ /g, '');
+                    if (formData.get(formDataKey)) {
+                        form.getCheckBox(req).check();
+                    } else {
+                        form.getCheckBox(req).uncheck();
+                    }
+                });
+
+                // ETP and B2B
+                const etpDropdownValue = formData.get('ETPDropdown');
+                if (etpDropdownValue) {
+                    form.getDropdown('ETP Drop down').select(etpDropdownValue);
+                }
+
+                form.getTextField('B2B UID').setText(formData.get('B2BUID') || '');
+
+                // Air Reservation Fields
+                if (formData.get('RoundTrip')) {
+                    form.getCheckBox('Round Trip').check();
+                } else {
+                    form.getCheckBox('Round Trip').uncheck();
+                }
+
+                if (formData.get('OneWay')) {
+                    form.getCheckBox('One Way').check();
+                } else {
+                    form.getCheckBox('One Way').uncheck();
+                }
+
+                form.getTextField('Dep location').setText(formData.get('DepLocation') || '');
+                form.getTextField('Dep Airline').setText(formData.get('DepAirline') || '');
+                form.getTextField('Dep arr location').setText(formData.get('DepArrLocation') || '');
+                form.getTextField('Dep Date').setText(formData.get('DepDate') || '');
+                form.getTextField('Dep Time').setText(formData.get('DepTime') || '');
+                form.getTextField('Dep arr time').setText(formData.get('DepArrTime') || '');
+                form.getTextField('Dep flight').setText(formData.get('DepFlight') || '');
+                form.getTextField('Air notes').setText(formData.get('AirNotes') || '');
+
+                // Return Flight
+                form.getTextField('Ret airline').setText(formData.get('RetAirline') || '');
+                form.getTextField('Ret dep location').setText(formData.get('RetDepLocation') || '');
+                form.getTextField('Ret dep date').setText(formData.get('RetDepDate') || '');
+                form.getTextField('Ret arr location').setText(formData.get('RetArrLocation') || '');
+                form.getTextField('Ret flight').setText(formData.get('RetFlight') || '');
+                form.getTextField('Ret dep time').setText(formData.get('RetDepTime') || '');
+                form.getTextField('Ret arr time').setText(formData.get('RetArrTime') || '');
+
+                // Car Rental Fields
+                if (formData.get('OneWayCar')) {
+                    form.getCheckBox('One way').check();
+                } else {
+                    form.getCheckBox('One way').uncheck();
+                }
+
+                form.getTextField('Car pick up').setText(formData.get('CarPickUp') || '');
+                form.getTextField('car date').setText(formData.get('CarDate') || '');
+                form.getTextField('car p/u time').setText(formData.get('CarPUTime') || '');
+                form.getTextField('car drop').setText(formData.get('CarDrop') || '');
+                form.getTextField('car drop date').setText(formData.get('CarDropDate') || '');
+                form.getTextField('car drop time').setText(formData.get('CarDropTime') || '');
+                form.getTextField('car notes').setText(formData.get('CarNotes') || '');
+
+                // Hotel Fields
+                const travelerBookedHotelValue = formData.get('TravelerBookedHotel');
+                if (travelerBookedHotelValue) {
+                    form.getDropdown('Dropdown41').select(travelerBookedHotelValue);
+                }
+
+                form.getTextField('Hotel check in').setText(formData.get('HotelCheckIn') || '');
+                form.getTextField('Hotel check out').setText(formData.get('HotelCheckOut') || '');
+                form.getTextField('reserv #').setText(formData.get('ReservNumber') || '');
+                form.getTextField('Hotel location').setText(formData.get('HotelLocation') || '');
+                form.getTextField('Hotel Notes').setText(formData.get('HotelNotes') || '');
+
+                // Comments
+                form.getTextField('Comments').setText(formData.get('Comments') || '');
+
+                // Serialize the PDF document to bytes (a Uint8Array)
+                const pdfBytes = await pdfDoc.save();
+
+                // Trigger a download of the filled PDF
+                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Filled_Travel_Request_Form.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error('Error loading or processing PDF:', error);
+                alert('An error occurred while processing the PDF.');
+            }
+        });
+    </script>
+</body>
+</html>
