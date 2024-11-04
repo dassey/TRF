@@ -171,6 +171,7 @@
 
         /* Hide sections by default */
         #AirSection,
+        #AirReturn,
         #CarSection,
         #HotelSection {
             display: none;
@@ -276,8 +277,7 @@
             <!-- Air Reservation Section -->
             <div id="AirSection">
                 <div class="section-header">Air Reservation</div>
-                <!-- Depart -->
-                <div class="section-subheader">Depart</div>
+                
                 <div class="row-container">
                     <div class="checkbox-item" style="display: flex; align-items: center;">
                         <input type="checkbox" id="RoundTrip" name="RoundTrip">
@@ -289,6 +289,7 @@
                     </div>
                 </div>
 
+                <div class="section-subheader">Depart</div>
                 <label for="DepLocation">Depart Airport</label>
                 <input type="text" id="DepLocation" name="DepLocation">
 
@@ -312,8 +313,9 @@
 
                 <label for="AirNotes">Air Notes</label>
                 <input type="text" id="AirNotes" name="AirNotes">
-
+            </div>
                 <!-- Return -->
+            <div id="AirReturn">
                 <div class="section-subheader">Return</div>
                 <label for="RetAirline">Preferred Airline</label>
                 <input type="text" id="RetAirline" name="RetAirline">
@@ -439,7 +441,11 @@
     // Show/Hide Sections Based on Checkboxes
     document.getElementById('AirReservation').addEventListener('change', function() {
         const airSection = document.getElementById('AirSection');
-        airSection.style.display = this.checked ? 'block' : 'none';
+        const airReturn = document.getElementById('AirReturn');
+        const displayStyle = this.checked ? 'block' : 'none';
+        airSection.style.display = displayStyle;
+        airReturn.style.display = displayStyle;
+
     });
 
     document.getElementById('CarRental').addEventListener('change', function() {
