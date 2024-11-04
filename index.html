@@ -6,7 +6,7 @@
     <style>
         body {
             background-color: #2c2c2e;
-            color: #333;
+            color: #fff;
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
@@ -176,6 +176,7 @@
         #HotelSection {
             display: none;
         }
+
     </style>
 </head>
 <body>
@@ -403,190 +404,209 @@
         </form>
     </div>
 
-    <!-- Include PDFLib library -->
-    <script src="./pdf-lib.min.js"></script>
 
-    <script>
-        // Existing JavaScript code for showing/hiding sections
+<!-- Include PDFLib library -->
+<script src="./pdf-lib.min.js"></script>
 
-        function updateInputGroupRowDisplay() {
-            const etpContainer = document.getElementById('ETPContainer');
-            const b2bContainer = document.getElementById('B2BContainer');
-            const inputGroupRow = document.querySelector('.input-group-row');
+<script>
+    // Existing JavaScript code for showing/hiding sections
 
-            // Show the input-group-row if any child is visible
-            if (etpContainer.style.display !== 'none' || b2bContainer.style.display !== 'none') {
-                inputGroupRow.style.display = 'flex';
-            } else {
-                inputGroupRow.style.display = 'none';
-            }
+    function updateInputGroupRowDisplay() {
+        const etpContainer = document.getElementById('ETPContainer');
+        const b2bContainer = document.getElementById('B2BContainer');
+        const inputGroupRow = document.querySelector('.input-group-row');
+
+        // Show the input-group-row if any child is visible
+        if (etpContainer.style.display !== 'none' || b2bContainer.style.display !== 'none') {
+            inputGroupRow.style.display = 'flex';
+        } else {
+            inputGroupRow.style.display = 'none';
         }
+    }
 
-        // ETP and B2B checkbox listeners
-        document.getElementById('ETP').addEventListener('change', function() {
-            const etpContainer = document.getElementById('ETPContainer');
-            etpContainer.style.display = this.checked ? 'flex' : 'none';
-            updateInputGroupRowDisplay();
-        });
+    // ETP and B2B checkbox listeners
+    document.getElementById('ETP').addEventListener('change', function() {
+        const etpContainer = document.getElementById('ETPContainer');
+        etpContainer.style.display = this.checked ? 'flex' : 'none';
+        updateInputGroupRowDisplay();
+    });
 
-        document.getElementById('B2B').addEventListener('change', function() {
-            const b2bContainer = document.getElementById('B2BContainer');
-            b2bContainer.style.display = this.checked ? 'flex' : 'none';
-            updateInputGroupRowDisplay();
-        });
+    document.getElementById('B2B').addEventListener('change', function() {
+        const b2bContainer = document.getElementById('B2BContainer');
+        b2bContainer.style.display = this.checked ? 'flex' : 'none';
+        updateInputGroupRowDisplay();
+    });
 
-        // Show/Hide Sections Based on Checkboxes
-        document.getElementById('AirReservation').addEventListener('change', function() {
-            const airSection = document.getElementById('AirSection');
-            airSection.style.display = this.checked ? 'block' : 'none';
-        });
+    // Show/Hide Sections Based on Checkboxes
+    document.getElementById('AirReservation').addEventListener('change', function() {
+        const airSection = document.getElementById('AirSection');
+        airSection.style.display = this.checked ? 'block' : 'none';
+    });
 
-        document.getElementById('CarRental').addEventListener('change', function() {
-            const carSection = document.getElementById('CarSection');
-            carSection.style.display = this.checked ? 'block' : 'none';
-        });
+    document.getElementById('CarRental').addEventListener('change', function() {
+        const carSection = document.getElementById('CarSection');
+        carSection.style.display = this.checked ? 'block' : 'none';
+    });
 
-        document.getElementById('HotelReservation').addEventListener('change', function() {
-            const hotelSection = document.getElementById('HotelSection');
-            hotelSection.style.display = this.checked ? 'block' : 'none';
-        });
+    document.getElementById('HotelReservation').addEventListener('change', function() {
+        const hotelSection = document.getElementById('HotelSection');
+        hotelSection.style.display = this.checked ? 'block' : 'none';
+    });
 
-        // Initialize sections based on checkbox states on page load
-        window.addEventListener('load', function() {
-            // Trigger change events to set initial visibility
-            document.getElementById('AirReservation').dispatchEvent(new Event('change'));
-            document.getElementById('CarRental').dispatchEvent(new Event('change'));
-            document.getElementById('HotelReservation').dispatchEvent(new Event('change'));
-            updateInputGroupRowDisplay();
-        });
+    // Initialize sections based on checkbox states on page load
+    window.addEventListener('load', function() {
+        // Trigger change events to set initial visibility
+        document.getElementById('AirReservation').dispatchEvent(new Event('change'));
+        document.getElementById('CarRental').dispatchEvent(new Event('change'));
+        document.getElementById('HotelReservation').dispatchEvent(new Event('change'));
+        updateInputGroupRowDisplay();
 
-        // Handle form submission and PDF generation
-        document.getElementById('travelRequestForm').addEventListener('submit', async function (event) {
-            event.preventDefault();
+        // Load saved traveler information
+        document.getElementById('travelerName').value = localStorage.getItem('travelerName') || '';
+        document.getElementById('employeeNumber').value = localStorage.getItem('employeeNumber') || '';
+        document.getElementById('travelerEmail').value = localStorage.getItem('travelerEmail') || '';
+        document.getElementById('travelerPhone').value = localStorage.getItem('travelerPhone') || '';
+        document.getElementById('homeMTC').value = localStorage.getItem('homeMTC') || '';
+    });
 
-            const formData = new FormData(event.target);
+    // Handle form submission and PDF generation
+    document.getElementById('travelRequestForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
 
-            try {
-                // Load PDF document from 'MyFile.pdf'
-                const existingPdfBytes = await fetch('MyFile.pdf').then(res => res.arrayBuffer());
-                const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+        const formData = new FormData(event.target);
 
-                const form = pdfDoc.getForm();
+        // Save traveler information to localStorage
+        localStorage.setItem('travelerName', formData.get('travelerName') || '');
+        localStorage.setItem('employeeNumber', formData.get('employeeNumber') || '');
+        localStorage.setItem('travelerEmail', formData.get('travelerEmail') || '');
+        localStorage.setItem('travelerPhone', formData.get('travelerPhone') || '');
+        localStorage.setItem('homeMTC', formData.get('homeMTC') || '');
 
-                // Map all form fields
+        try {
+            // Load PDF document from 'MyFile.pdf'
+            const existingPdfBytes = await fetch('MyFile.pdf').then(res => res.arrayBuffer());
+            const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
 
-                // Traveler Information
-                form.getTextField('Name').setText(formData.get('travelerName') || '');
-                form.getTextField('Employee#').setText(formData.get('employeeNumber') || '');
-                form.getTextField('Phone').setText(formData.get('travelerPhone') || '');
-                form.getTextField('Email').setText(formData.get('travelerEmail') || '');
-                form.getDropdown('Dropdown46').select(formData.get('homeMTC') || '');
+            const form = pdfDoc.getForm();
 
-                // Event Summary
-                form.getTextField('Training Location').setText(formData.get('TrainingLocation') || '');
-                form.getTextField('UID').setText(formData.get('UID') || '');
-                form.getTextField('Travel Start').setText(formData.get('TravelStart') || '');
-                form.getTextField('Travel End').setText(formData.get('TravelEnd') || '');
+            // Map all form fields
 
-                // Travel Requirements Checkboxes
-                const travelRequirements = ['Air Reservation', 'Hotel Reservation', 'Car Rental', 'POV', 'ETP', 'B2B'];
-                travelRequirements.forEach(req => {
-                    // Adjust the formData key by removing spaces and replacing with empty string
-                    const formDataKey = req.replace(/ /g, '');
-                    if (formData.get(formDataKey)) {
-                        form.getCheckBox(req).check();
-                    } else {
-                        form.getCheckBox(req).uncheck();
-                    }
-                });
-
-                // ETP and B2B
-                const etpDropdownValue = formData.get('ETPDropdown');
-                if (etpDropdownValue) {
-                    form.getDropdown('ETP Drop down').select(etpDropdownValue);
-                }
-
-                form.getTextField('B2B UID').setText(formData.get('B2BUID') || '');
-
-                // Air Reservation Fields
-                if (formData.get('RoundTrip')) {
-                    form.getCheckBox('Round Trip').check();
-                } else {
-                    form.getCheckBox('Round Trip').uncheck();
-                }
-
-                if (formData.get('OneWay')) {
-                    form.getCheckBox('One Way').check();
-                } else {
-                    form.getCheckBox('One Way').uncheck();
-                }
-
-                form.getTextField('Dep location').setText(formData.get('DepLocation') || '');
-                form.getTextField('Dep Airline').setText(formData.get('DepAirline') || '');
-                form.getTextField('Dep arr location').setText(formData.get('DepArrLocation') || '');
-                form.getTextField('Dep Date').setText(formData.get('DepDate') || '');
-                form.getTextField('Dep Time').setText(formData.get('DepTime') || '');
-                form.getTextField('Dep arr time').setText(formData.get('DepArrTime') || '');
-                form.getTextField('Dep flight').setText(formData.get('DepFlight') || '');
-                form.getTextField('Air notes').setText(formData.get('AirNotes') || '');
-
-                // Return Flight
-                form.getTextField('Ret airline').setText(formData.get('RetAirline') || '');
-                form.getTextField('Ret dep location').setText(formData.get('RetDepLocation') || '');
-                form.getTextField('Ret dep date').setText(formData.get('RetDepDate') || '');
-                form.getTextField('Ret arr location').setText(formData.get('RetArrLocation') || '');
-                form.getTextField('Ret flight').setText(formData.get('RetFlight') || '');
-                form.getTextField('Ret dep time').setText(formData.get('RetDepTime') || '');
-                form.getTextField('Ret arr time').setText(formData.get('RetArrTime') || '');
-
-                // Car Rental Fields
-                if (formData.get('OneWayCar')) {
-                    form.getCheckBox('One way').check();
-                } else {
-                    form.getCheckBox('One way').uncheck();
-                }
-
-                form.getTextField('Car pick up').setText(formData.get('CarPickUp') || '');
-                form.getTextField('car date').setText(formData.get('CarDate') || '');
-                form.getTextField('car p/u time').setText(formData.get('CarPUTime') || '');
-                form.getTextField('car drop').setText(formData.get('CarDrop') || '');
-                form.getTextField('car drop date').setText(formData.get('CarDropDate') || '');
-                form.getTextField('car drop time').setText(formData.get('CarDropTime') || '');
-                form.getTextField('car notes').setText(formData.get('CarNotes') || '');
-
-                // Hotel Fields
-                const travelerBookedHotelValue = formData.get('TravelerBookedHotel');
-                if (travelerBookedHotelValue) {
-                    form.getDropdown('Dropdown41').select(travelerBookedHotelValue);
-                }
-
-                form.getTextField('Hotel check in').setText(formData.get('HotelCheckIn') || '');
-                form.getTextField('Hotel check out').setText(formData.get('HotelCheckOut') || '');
-                form.getTextField('reserv #').setText(formData.get('ReservNumber') || '');
-                form.getTextField('Hotel location').setText(formData.get('HotelLocation') || '');
-                form.getTextField('Hotel Notes').setText(formData.get('HotelNotes') || '');
-
-                // Comments
-                form.getTextField('Comments').setText(formData.get('Comments') || '');
-
-                // Serialize the PDF document to bytes (a Uint8Array)
-                const pdfBytes = await pdfDoc.save();
-
-                // Trigger a download of the filled PDF
-                const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'Filled_Travel_Request_Form.pdf';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            } catch (error) {
-                console.error('Error loading or processing PDF:', error);
-                alert('An error occurred while processing the PDF.');
+            // Traveler Information
+            const homeMTCValue = formData.get('homeMTC');
+            if (homeMTCValue) {
+                form.getDropdown('Dropdown46').select(homeMTCValue);
             }
-        });
-    </script>
+
+            form.getTextField('Name').setText(formData.get('travelerName') || '');
+            form.getTextField('Employee#').setText(formData.get('employeeNumber') || '');
+            form.getTextField('Phone').setText(formData.get('travelerPhone') || '');
+            form.getTextField('Email').setText(formData.get('travelerEmail') || '');
+
+            // Event Summary
+            form.getTextField('Training Location').setText(formData.get('TrainingLocation') || '');
+            form.getTextField('UID').setText(formData.get('UID') || '');
+            form.getTextField('Travel Start').setText(formData.get('TravelStart') || '');
+            form.getTextField('Travel End').setText(formData.get('TravelEnd') || '');
+
+            // Travel Requirements Checkboxes
+            const travelRequirements = ['Air Reservation', 'Hotel Reservation', 'Car Rental', 'POV', 'ETP', 'B2B'];
+            travelRequirements.forEach(req => {
+                // Adjust the formData key by removing spaces
+                const formDataKey = req.replace(/ /g, '');
+                if (formData.get(formDataKey)) {
+                    form.getCheckBox(req).check();
+                } else {
+                    form.getCheckBox(req).uncheck();
+                }
+            });
+
+            // ETP and B2B
+            const etpDropdownValue = formData.get('ETPDropdown');
+            if (etpDropdownValue) {
+                form.getDropdown('ETP Drop down').select(etpDropdownValue);
+            }
+
+            form.getTextField('B2B UID').setText(formData.get('B2BUID') || '');
+
+            // Air Reservation Fields
+            if (formData.get('RoundTrip')) {
+                form.getCheckBox('Round Trip').check();
+            } else {
+                form.getCheckBox('Round Trip').uncheck();
+            }
+
+            if (formData.get('OneWay')) {
+                form.getCheckBox('One Way').check();
+            } else {
+                form.getCheckBox('One Way').uncheck();
+            }
+
+            form.getTextField('Dep location').setText(formData.get('DepLocation') || '');
+            form.getTextField('Dep Airline').setText(formData.get('DepAirline') || '');
+            form.getTextField('Dep arr location').setText(formData.get('DepArrLocation') || '');
+            form.getTextField('Dep Date').setText(formData.get('DepDate') || '');
+            form.getTextField('Dep Time').setText(formData.get('DepTime') || '');
+            form.getTextField('Dep arr time').setText(formData.get('DepArrTime') || '');
+            form.getTextField('Dep flight').setText(formData.get('DepFlight') || '');
+            form.getTextField('Air notes').setText(formData.get('AirNotes') || '');
+
+            // Return Flight
+            form.getTextField('Ret airline').setText(formData.get('RetAirline') || '');
+            form.getTextField('Ret dep location').setText(formData.get('RetDepLocation') || '');
+            form.getTextField('Ret dep date').setText(formData.get('RetDepDate') || '');
+            form.getTextField('Ret arr location').setText(formData.get('RetArrLocation') || '');
+            form.getTextField('Ret flight').setText(formData.get('RetFlight') || '');
+            form.getTextField('Ret dep time').setText(formData.get('RetDepTime') || '');
+            form.getTextField('Ret arr time').setText(formData.get('RetArrTime') || '');
+
+            // Car Rental Fields
+            if (formData.get('OneWayCar')) {
+                form.getCheckBox('One way').check();
+            } else {
+                form.getCheckBox('One way').uncheck();
+            }
+
+            form.getTextField('Car pick up').setText(formData.get('CarPickUp') || '');
+            form.getTextField('car date').setText(formData.get('CarDate') || '');
+            form.getTextField('car p/u time').setText(formData.get('CarPUTime') || '');
+            form.getTextField('car drop').setText(formData.get('CarDrop') || '');
+            form.getTextField('car drop date').setText(formData.get('CarDropDate') || '');
+            form.getTextField('car drop time').setText(formData.get('CarDropTime') || '');
+            form.getTextField('car notes').setText(formData.get('CarNotes') || '');
+
+            // Hotel Fields
+            const travelerBookedHotelValue = formData.get('TravelerBookedHotel');
+            if (travelerBookedHotelValue) {
+                form.getDropdown('Dropdown41').select(travelerBookedHotelValue);
+            }
+
+            form.getTextField('Hotel check in').setText(formData.get('HotelCheckIn') || '');
+            form.getTextField('Hotel check out').setText(formData.get('HotelCheckOut') || '');
+            form.getTextField('reserv #').setText(formData.get('ReservNumber') || '');
+            form.getTextField('Hotel location').setText(formData.get('HotelLocation') || '');
+            form.getTextField('Hotel Notes').setText(formData.get('HotelNotes') || '');
+
+            // Comments
+            form.getTextField('Comments').setText(formData.get('Comments') || '');
+
+            // Serialize the PDF document to bytes (a Uint8Array)
+            const pdfBytes = await pdfDoc.save();
+
+            // Trigger a download of the filled PDF
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Filled_Travel_Request_Form.pdf';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error loading or processing PDF:', error);
+            alert('An error occurred while processing the PDF.');
+        }
+    });
+</script>
 </body>
 </html>

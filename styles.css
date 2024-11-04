@@ -1,0 +1,13 @@
+.subsection-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.subsection {
+    flex: 1;
+    margin: 0 10px;
+}
+
+body {
+    overflow: hidden; /* Prevents the page from changing sizes */
+}
