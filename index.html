@@ -288,15 +288,16 @@
                         <label for="OneWay">One Way</label>
                     </div>
                 </div>
-
+                
                 <div class="section-subheader">Depart</div>
+                <label for="DepAirline">Preferred Airline</label>
+                <input type="text" id="DepAirline" name="DepAirline">
+                <label for="DepFlight">Preferred Flight#</label>
+                <input type="text" id="DepFlight" name="DepFlight">
                 <label for="DepLocation">Depart Airport</label>
                 <input type="text" id="DepLocation" name="DepLocation">
 
-                <label for="DepAirline">Preferred Airline</label>
-                <input type="text" id="DepAirline" name="DepAirline">
-
-                <label for="DepArrLocation">Arrive Location</label>
+                <label for="DepArrLocation">Arrive Airport</label>
                 <input type="text" id="DepArrLocation" name="DepArrLocation">
 
                 <label for="DepDate">Date</label>
@@ -307,30 +308,22 @@
 
                 <label for="DepArrTime">Arrive Time</label>
                 <input type="time" id="DepArrTime" name="DepArrTime">
-
-                <label for="DepFlight">Preferred Flight#</label>
-                <input type="text" id="DepFlight" name="DepFlight">
-
-                <label for="AirNotes">Air Notes</label>
-                <input type="text" id="AirNotes" name="AirNotes">
             </div>
                 <!-- Return -->
             <div id="AirReturn">
-                <div class="section-subheader">Return</div>
+                <div class="section-subheader"><BR><BR><BR><BR>Return</div>
                 <label for="RetAirline">Preferred Airline</label>
                 <input type="text" id="RetAirline" name="RetAirline">
+                <label for="RetFlight">Preferred Flight#</label>
+                <input type="text" id="RetFlight" name="RetFlight">
 
                 <label for="RetDepLocation">Depart Airport</label>
                 <input type="text" id="RetDepLocation" name="RetDepLocation">
-
-                <label for="RetDepDate">Date</label>
-                <input type="date" id="RetDepDate" name="RetDepDate">
-
                 <label for="RetArrLocation">Arrive Airport</label>
                 <input type="text" id="RetArrLocation" name="RetArrLocation">
 
-                <label for="RetFlight">Preferred Flight#</label>
-                <input type="text" id="RetFlight" name="RetFlight">
+                <label for="RetDepDate">Date</label>
+                <input type="date" id="RetDepDate" name="RetDepDate">
 
                 <label for="RetDepTime">Depart Time</label>
                 <input type="time" id="RetDepTime" name="RetDepTime">
@@ -473,79 +466,139 @@
         document.getElementById('travelerPhone').value = localStorage.getItem('travelerPhone') || '';
         document.getElementById('homeMTC').value = localStorage.getItem('homeMTC') || '';
     });
+// This section
+document.getElementById('TravelStart').addEventListener('change', function() {
+    const travelStartDate = this.value;
+    const depDate = document.getElementById('DepDate');
+    const hotelCheckIn = document.getElementById('HotelCheckIn');
+    const carDate = document.getElementById('CarDate');
 
-    // Handle form submission and PDF generation
-    document.getElementById('travelRequestForm').addEventListener('submit', async function (event) {
-        event.preventDefault();
+    // Set DepDate to the same value as TravelStart
+    depDate.value = travelStartDate;
+    hotelCheckIn.value = travelStartDate;
+    carDate.value = travelStartDate;
+});
 
-        const formData = new FormData(event.target);
+document.getElementById('TravelEnd').addEventListener('change', function() {
+    const travelEnd = this.value;
+    const retDepDate = document.getElementById('RetDepDate');
+    const hotelCheckOut = document.getElementById('HotelCheckOut');
+    const carDropDate = document.getElementById('CarDropDate');
 
-        // Save traveler information to localStorage
-        localStorage.setItem('travelerName', formData.get('travelerName') || '');
-        localStorage.setItem('employeeNumber', formData.get('employeeNumber') || '');
-        localStorage.setItem('travelerEmail', formData.get('travelerEmail') || '');
-        localStorage.setItem('travelerPhone', formData.get('travelerPhone') || '');
-        localStorage.setItem('homeMTC', formData.get('homeMTC') || '');
+    // Set DepDate to the same value as TravelStart
+    retDepDate.value = travelEnd;
+    hotelCheckOut.value = travelEnd;
+    carDropDate.value = travelEnd;
+});
+// Update RetDepLocation and RetArrLocation based on DepArrLocation and DepLocation changes
+document.getElementById('DepArrLocation').addEventListener('input', function() {
+    const LocationValue = this.value;
+    document.getElementById('RetDepLocation').value = LocationValue;
+    document.getElementById('CarPickUp').value = LocationValue;
+    document.getElementById('CarDrop').value = LocationValue;
+});
 
-        try {
-            // Load PDF document from 'MyFile.pdf'
-            const existingPdfBytes = await fetch('MyFile.pdf').then(res => res.arrayBuffer());
-            const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+document.getElementById('DepLocation').addEventListener('input', function() {
+    const depLocationValue = this.value;
+    document.getElementById('RetArrLocation').value = depLocationValue;
 
-            const form = pdfDoc.getForm();
+});
 
-            // Map all form fields
+// Update CarPUTime to be 30 minutes after DepArrTime
+document.getElementById('DepArrTime').addEventListener('input', function() {
+    const depArrTime = this.value;
+    const carPUTime = document.getElementById('CarPUTime');
 
-            // Traveler Information
-            const homeMTCValue = formData.get('homeMTC');
-            if (homeMTCValue) {
-                form.getDropdown('Dropdown46').select(homeMTCValue);
-            }
+    if (depArrTime) {
+        // Parse DepArrTime as a Date object
+        const [hours, minutes] = depArrTime.split(':');
+        const depDate = new Date();
+        depDate.setHours(parseInt(hours));
+        depDate.setMinutes(parseInt(minutes) + 30);
 
-            form.getTextField('Name').setText(formData.get('travelerName') || '');
-            form.getTextField('Employee#').setText(formData.get('employeeNumber') || '');
-            form.getTextField('Phone').setText(formData.get('travelerPhone') || '');
-            form.getTextField('Email').setText(formData.get('travelerEmail') || '');
+        // Format the new time as HH:MM
+        const formattedHours = depDate.getHours().toString().padStart(2, '0');
+        const formattedMinutes = depDate.getMinutes().toString().padStart(2, '0');
+        carPUTime.value = `${formattedHours}:${formattedMinutes}`;
+    }
+});
+// Update CarDropTime to be 2 hours before RetDepTime
+document.getElementById('RetDepTime').addEventListener('input', function() {
+    const retDepTime = this.value;
+    const carDropTime = document.getElementById('CarDropTime');
 
-            // Event Summary
-            form.getTextField('Training Location').setText(formData.get('TrainingLocation') || '');
-            form.getTextField('UID').setText(formData.get('UID') || '');
-            form.getTextField('Travel Start').setText(formData.get('TravelStart') || '');
-            form.getTextField('Travel End').setText(formData.get('TravelEnd') || '');
+    if (retDepTime) {
+        // Parse RetDepTime as a Date object
+        const [hours, minutes] = retDepTime.split(':');
+        const retDate = new Date();
+        retDate.setHours(parseInt(hours));
+        retDate.setMinutes(parseInt(minutes) - 120); // Subtract 2 hours (120 minutes)
 
-            // Travel Requirements Checkboxes
-            const travelRequirements = ['Air Reservation', 'Hotel Reservation', 'Car Rental', 'POV', 'ETP', 'B2B'];
-            travelRequirements.forEach(req => {
-                // Adjust the formData key by removing spaces
-                const formDataKey = req.replace(/ /g, '');
-                if (formData.get(formDataKey)) {
-                    form.getCheckBox(req).check();
-                } else {
-                    form.getCheckBox(req).uncheck();
-                }
-            });
+        // Format the new time as HH:MM
+        const formattedHours = retDate.getHours().toString().padStart(2, '0');
+        const formattedMinutes = retDate.getMinutes().toString().padStart(2, '0');
+        carDropTime.value = `${formattedHours}:${formattedMinutes}`;
+    }
+});
 
-            // ETP and B2B
-            const etpDropdownValue = formData.get('ETPDropdown');
-            if (etpDropdownValue) {
-                form.getDropdown('ETP Drop down').select(etpDropdownValue);
-            }
 
-            form.getTextField('B2B UID').setText(formData.get('B2BUID') || '');
 
-            // Air Reservation Fields
+
+
+
+
+
+
+
+// Handle form submission and PDF generation
+document.getElementById('travelRequestForm').addEventListener('submit', async function (event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+
+    // Save traveler information to localStorage
+    localStorage.setItem('travelerName', formData.get('travelerName') || '');
+    localStorage.setItem('employeeNumber', formData.get('employeeNumber') || '');
+    localStorage.setItem('travelerEmail', formData.get('travelerEmail') || '');
+    localStorage.setItem('travelerPhone', formData.get('travelerPhone') || '');
+    localStorage.setItem('homeMTC', formData.get('homeMTC') || '');
+
+    try {
+        // Load PDF document from 'MyFile.pdf'
+        const existingPdfBytes = await fetch('MyFile.pdf').then(res => res.arrayBuffer());
+        const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
+
+        const form = pdfDoc.getForm();
+
+        // Traveler Information
+        const homeMTCValue = formData.get('homeMTC');
+        if (homeMTCValue) {
+            form.getDropdown('Dropdown46').select(homeMTCValue);
+        }
+        form.getTextField('Name').setText(formData.get('travelerName') || '');
+        form.getTextField('Employee#').setText(formData.get('employeeNumber') || '');
+        form.getTextField('Phone').setText(formData.get('travelerPhone') || '');
+        form.getTextField('Email').setText(formData.get('travelerEmail') || '');
+
+        // Event Summary
+        form.getTextField('Training Location').setText(formData.get('TrainingLocation') || '');
+        form.getTextField('UID').setText(formData.get('UID') || '');
+        form.getTextField('Travel Start').setText(formData.get('TravelStart') || '');
+        form.getTextField('Travel End').setText(formData.get('TravelEnd') || '');
+
+        // Air Reservation
+        if (document.getElementById('AirReservation').checked) {
+            form.getCheckBox('Air Reservation').check();
             if (formData.get('RoundTrip')) {
                 form.getCheckBox('Round Trip').check();
             } else {
                 form.getCheckBox('Round Trip').uncheck();
             }
-
             if (formData.get('OneWay')) {
                 form.getCheckBox('One Way').check();
             } else {
                 form.getCheckBox('One Way').uncheck();
             }
-
             form.getTextField('Dep location').setText(formData.get('DepLocation') || '');
             form.getTextField('Dep Airline').setText(formData.get('DepAirline') || '');
             form.getTextField('Dep arr location').setText(formData.get('DepArrLocation') || '');
@@ -563,14 +616,18 @@
             form.getTextField('Ret flight').setText(formData.get('RetFlight') || '');
             form.getTextField('Ret dep time').setText(formData.get('RetDepTime') || '');
             form.getTextField('Ret arr time').setText(formData.get('RetArrTime') || '');
+        } else {
+            form.getCheckBox('Air Reservation').uncheck();
+        }
 
-            // Car Rental Fields
+        // Car Rental
+        if (document.getElementById('CarRental').checked) {
+            form.getCheckBox('Car Rental').check();
             if (formData.get('OneWayCar')) {
                 form.getCheckBox('One way').check();
             } else {
                 form.getCheckBox('One way').uncheck();
             }
-
             form.getTextField('Car pick up').setText(formData.get('CarPickUp') || '');
             form.getTextField('car date').setText(formData.get('CarDate') || '');
             form.getTextField('car p/u time').setText(formData.get('CarPUTime') || '');
@@ -578,40 +635,71 @@
             form.getTextField('car drop date').setText(formData.get('CarDropDate') || '');
             form.getTextField('car drop time').setText(formData.get('CarDropTime') || '');
             form.getTextField('car notes').setText(formData.get('CarNotes') || '');
+        } else {
+            form.getCheckBox('Car Rental').uncheck();
+        }
 
-            // Hotel Fields
+        // Hotel Reservation
+        if (document.getElementById('HotelReservation').checked) {
+            form.getCheckBox('Hotel Reservation').check();
             const travelerBookedHotelValue = formData.get('TravelerBookedHotel');
             if (travelerBookedHotelValue) {
                 form.getDropdown('Dropdown41').select(travelerBookedHotelValue);
             }
-
             form.getTextField('Hotel check in').setText(formData.get('HotelCheckIn') || '');
             form.getTextField('Hotel check out').setText(formData.get('HotelCheckOut') || '');
             form.getTextField('reserv #').setText(formData.get('ReservNumber') || '');
             form.getTextField('Hotel location').setText(formData.get('HotelLocation') || '');
             form.getTextField('Hotel Notes').setText(formData.get('HotelNotes') || '');
-
-            // Comments
-            form.getTextField('Comments').setText(formData.get('Comments') || '');
-
-            // Serialize the PDF document to bytes (a Uint8Array)
-            const pdfBytes = await pdfDoc.save();
-
-            // Trigger a download of the filled PDF
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Filled_Travel_Request_Form.pdf';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Error loading or processing PDF:', error);
-            alert('An error occurred while processing the PDF.');
+        } else {
+            form.getCheckBox('Hotel Reservation').uncheck();
         }
-    });
+
+        // Travel Requirements Checkboxes
+        const travelRequirements = ['POV', 'ETP', 'B2B'];
+        travelRequirements.forEach(req => {
+            const checkbox = document.getElementById(req);
+            if (checkbox && checkbox.checked) {
+                form.getCheckBox(req).check();
+            } else {
+                form.getCheckBox(req).uncheck();
+            }
+        });
+
+        // ETP
+        if (document.getElementById('ETP').checked) {
+            const etpDropdownValue = formData.get('ETPDropdown');
+            if (etpDropdownValue) {
+                form.getDropdown('ETP Drop down').select(etpDropdownValue);
+            }
+        }
+
+        // B2B
+        if (document.getElementById('B2B').checked) {
+            form.getTextField('B2B UID').setText(formData.get('B2BUID') || '');
+        }
+
+        // Comments
+        form.getTextField('Comments').setText(formData.get('Comments') || '');
+
+        // Serialize the PDF document to bytes (a Uint8Array)
+        const pdfBytes = await pdfDoc.save();
+
+        // Trigger a download of the filled PDF
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Filled_Travel_Request_Form.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    } catch (error) {
+        console.error('Error loading or processing PDF:', error);
+        alert('An error occurred while processing the PDF.');
+    }
+});
 </script>
 </body>
 </html>
