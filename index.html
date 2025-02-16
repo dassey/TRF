@@ -712,6 +712,30 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
         // Comments
         form.getTextField('Comments').setText(formData.get('Comments') || '');
 
+        // Generate the correct filename
+        const uid = formData.get('UID')?.trim() || 'NO_UID';
+        const travelerName = formData.get('travelerName')?.trim() || 'NO_NAME';
+        const travelStart = formData.get('TravelStart') || '';
+
+        let lastNameFirstInitial = 'UNKNOWN';
+        if (travelerName.includes(' ')) {
+            const nameParts = travelerName.split(' ');
+            const lastName = nameParts[nameParts.length - 1].toUpperCase();
+            const firstInitial = nameParts[0].charAt(0).toUpperCase();
+            lastNameFirstInitial = `${lastName}${firstInitial}`;
+        }
+
+        let formattedDate = 'NO_DATE';
+        if (travelStart) {
+            const dateObj = new Date(travelStart);
+            const day = dateObj.getDate().toString().padStart(2, '0');
+            const month = dateObj.toLocaleString('en-US', { month: 'short' }).toUpperCase();
+            const year = dateObj.getFullYear().toString().slice(-2);
+            formattedDate = `${day}_${month}_${year}`;
+        }
+
+        const fileName = `${uid}_HST_${lastNameFirstInitial}_${formattedDate}.pdf`;
+
         // Serialize the PDF document to bytes (a Uint8Array)
         const pdfBytes = await pdfDoc.save();
 
@@ -720,7 +744,7 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = 'Filled_Travel_Request_Form.pdf';
+        a.download = fileName;
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
