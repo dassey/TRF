@@ -572,15 +572,6 @@ document.getElementById('RetDepTime').addEventListener('input', function() {
     }
 });
 
-
-
-
-
-
-
-
-
-
 // Handle form submission and PDF generation
 document.getElementById('travelRequestForm').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -600,6 +591,11 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
         const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
 
         const form = pdfDoc.getForm();
+// Temp Check fields
+const fields = form.getFields();
+fields.forEach(field => {
+    console.log('Field:', field.getName());
+});
 
         // Traveler Information
         const homeMTCValue = formData.get('homeMTC');
@@ -616,8 +612,6 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
         form.getTextField('UID').setText(formData.get('UID') || '');
         form.getTextField('Travel Start').setText(formData.get('TravelStart') || '');
         form.getTextField('Travel End').setText(formData.get('TravelEnd') || '');
-//temp Log
-        console.log("AirReservation checked:", document.getElementById('AirReservation').checked);
 
         // Air Reservation
         if (document.getElementById('AirReservation').checked) {
