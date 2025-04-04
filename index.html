@@ -591,9 +591,6 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
         const pdfDoc = await PDFLib.PDFDocument.load(existingPdfBytes);
 
         const form = pdfDoc.getForm();
-// Temp Check fields
-const form = pdfDoc.getForm();
-
 // 🔍 DEBUG: Check the field type for Air Reservation
 const field = form.getField('Air Reservation');
 console.log("Field type:", field.constructor.name);
