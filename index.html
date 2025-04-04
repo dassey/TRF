@@ -593,7 +593,17 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
         const form = pdfDoc.getForm();
 // 🔍 DEBUG: Check the field type for Air Reservation
 const field = form.getField('Air Reservation');
-console.log("Field type:", field.constructor.name);
+
+if (field.check) {
+    console.log("Field type: PDFCheckBox");
+} else if (field.select) {
+    console.log("Field type: PDFDropdown");
+} else if (field.setText) {
+    console.log("Field type: PDFTextField");
+} else {
+    console.log("Field type: Unknown or unsupported");
+}
+
 
 
         // Traveler Information
