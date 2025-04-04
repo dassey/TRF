@@ -741,6 +741,9 @@ if (field.check) {
         }
 
         const fileName = `${uid}_HST_${lastNameFirstInitial}_${formattedDate}.pdf`;
+        
+        //Troubleshooting checkboxes
+        form.updateFieldAppearances();
 
         // Serialize the PDF document to bytes (a Uint8Array)
         const pdfBytes = await pdfDoc.save();
