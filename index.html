@@ -616,6 +616,8 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
         form.getTextField('UID').setText(formData.get('UID') || '');
         form.getTextField('Travel Start').setText(formData.get('TravelStart') || '');
         form.getTextField('Travel End').setText(formData.get('TravelEnd') || '');
+//temp Log
+        console.log("AirReservation checked:", document.getElementById('AirReservation').checked);
 
         // Air Reservation
         if (document.getElementById('AirReservation').checked) {
