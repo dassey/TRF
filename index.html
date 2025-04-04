@@ -592,10 +592,12 @@ document.getElementById('travelRequestForm').addEventListener('submit', async fu
 
         const form = pdfDoc.getForm();
 // Temp Check fields
-const fields = form.getFields();
-fields.forEach(field => {
-    console.log('Field:', field.getName());
-});
+const form = pdfDoc.getForm();
+
+// 🔍 DEBUG: Check the field type for Air Reservation
+const field = form.getField('Air Reservation');
+console.log("Field type:", field.constructor.name);
+
 
         // Traveler Information
         const homeMTCValue = formData.get('homeMTC');
