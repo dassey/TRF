@@ -119,27 +119,33 @@ button:active{transform:translateY(-1px)}
 <div class="container">
 <form id="travelRequestForm">
   <h2>Travel Request Form</h2>
-
+  
   <div class="section-header">Traveler Information</div>
-  <div class="input-group home-mtc-container">
-    <label for="homeMTC">Home MTC</label>
-    <select id="homeMTC" name="homeMTC" autocomplete="organization">
-      <option value="" disabled selected>Select MTC</option>
-      <option>LVN</option><option>HST/MCAT</option><option>CHF</option>
-      <option>DGE</option><option>FIG</option><option>GOW</option>
-    </select>
+  <div class="row-container">
+    <div class="input-group home-mtc-container">
+      <label for="homeMTC">Home MTC</label>
+      <select id="homeMTC" name="homeMTC" autocomplete="organization">
+        <option value="" disabled selected>Select MTC</option>
+        <option>LVN</option><option>HST/MCAT</option><option>CHF</option>
+        <option>DGE</option><option>FIG</option><option>GOW</option>
+      </select>
+    </div>
+    
+    <div class="input-group"><label for="travelerName">Name (First Last)</label><input id="travelerName" name="travelerName" required></div>
+    <div class="input-group"><label for="employeeNumber">Employee #</label><input id="employeeNumber" name="employeeNumber" inputmode="numeric" pattern="[0-9]*"></div>
+    <div class="input-group"><label for="travelerEmail">E-mail</label><input type="email" id="travelerEmail" name="travelerEmail" required></div>
+    <div class="input-group"><label for="travelerPhone">Phone</label><input type="tel" id="travelerPhone" name="travelerPhone"></div>
   </div>
-  <div class="input-group"><label for="travelerName">Name (First Last)</label><input id="travelerName" name="travelerName" required></div>
-  <div class="input-group"><label for="employeeNumber">Employee #</label><input id="employeeNumber" name="employeeNumber" inputmode="numeric" pattern="[0-9]*"></div>
-  <div class="input-group"><label for="travelerEmail">E-mail</label><input type="email" id="travelerEmail" name="travelerEmail" required></div>
-  <div class="input-group"><label for="travelerPhone">Phone</label><input type="tel" id="travelerPhone" name="travelerPhone"></div>
 
-  <div class="section-header">Event Summary</div>
-  <div class="input-group"><label for="TrainingLocation">Training Location (City, ST)</label><input id="TrainingLocation" name="TrainingLocation" required></div>
-  <div class="input-group"><label for="UID">UID</label><input id="UID" name="UID" required></div>
-  <div class="input-group"><label for="TravelStart">Travel Start Date</label><input type="date" id="TravelStart" name="TravelStart" required></div>
-  <div class="input-group"><label for="TravelEnd">Travel End Date</label><input type="date" id="TravelEnd" name="TravelEnd" required></div>
+    <div class="section-header">Event Summary</div>
+  <div class="row-container">
+    <div class="input-group"><label for="TrainingLocation">Training Location (City, ST)</label><input id="TrainingLocation" name="TrainingLocation" required></div>
+    <div class="input-group"><label for="UID">UID</label><input id="UID" name="UID" required></div>
+    <div class="input-group"><label for="TravelStart">Travel Start Date</label><input type="date" id="TravelStart" name="TravelStart" required></div>
+    <div class="input-group"><label for="TravelEnd">Travel End Date</label><input type="date" id="TravelEnd" name="TravelEnd" required></div>
+  </div>
 
+  
   <div class="section-header">Travel Requirements</div>
   <div class="checkbox-group">
     <label class="touch-target"><input type="checkbox" id="AirReservation">Air</label>
