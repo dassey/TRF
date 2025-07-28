@@ -1,4 +1,4 @@
-l<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -6,181 +6,285 @@ l<!DOCTYPE html>
 <title>Travel Request Form</title>
 
 <style>
-/* ========================================================= */
-/*  GLOBAL PATCHES (first so they apply to everything)       */
-/* ========================================================= */
-*,*::before,*::after{box-sizing:border-box;}   /* stop overflow   */
-html,body{overflow-x:hidden;}                  /* no side scroll  */
+/* =================================================================== */
+/* MODERN STYLING (UPGRADED)                                          */
+/* =================================================================== */
+
+/* ------------------- Theme & Color Palette ------------------------- */
+:root {
+  /* A modern, clean, and accessible color palette inspired by systems like Tailwind CSS. */
+  --background-color: #f3f4f6;   /* Light Gray background for the page */
+  --container-bg: #ffffff;      /* Pure white for the form container */
+  --container-text: #1f2937;    /* Very dark gray for body text, softer than black */
+  --label-color: #6b7281;       /* Medium gray for labels */
+  --primary-color: #4f46e5;      /* A vibrant, modern Indigo */
+  --primary-hover: #4338ca;      /* A darker shade of Indigo for hover states */
+  --input-bg: #ffffff;          /* White input background */
+  --input-border: #d1d5db;      /* Light gray for input borders */
+  --input-focus-ring: rgba(79, 70, 229, 0.25); /* Faint ring on focus, matches primary color */
+  --section-border: #e5e7eb;    /* Lighter gray for dividers */
+  
+  /* --- Layout & Sizing --- */
+  --touch-target: 44px;         /* WCAG / Apple HIG standard */
+  --border-radius-md: 6px;      /* A slightly smaller, modern border radius */
+  --border-radius-lg: 8px;      /* For the main container */
+  --shadow-main: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); /* Subtle shadow */
+  --gap-col: 25px;
+  --gap-row: 20px;
+}
+
+/* ------------------- Global Resets & Patches ----------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+html, body {
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+/* No-tap-highlight for touch devices */
+* { -webkit-tap-highlight-color: rgba(0,0,0,0); }
 
 /* -------- control width/height normalisation ------------- */
 input:not([type=checkbox]):not([type=radio]),
-select,textarea{max-inline-size:100%;}
-
-input[type=date],input[type=time],select{
-  height:44px;line-height:1.2;padding-block:.5rem;
+select, textarea {
+  max-inline-size: 100%;
 }
-
-/* -------- native but enlarged check/radio ---------------- */
-input[type=checkbox],input[type=radio]{
-  appearance:auto;          /* use platform glyph            */
-  transform:scale(1.25);    /* bigger tap target             */
-  border:none;              /* remove custom outline         */
-  accent-color:#007bff;     /* keep theme colour             */
+input[type=date], input[type=time], select {
+  height: var(--touch-target);
+  line-height: 1.2;
+  padding-block: .5rem;
+}
+/* Enlarge native checkboxes/radios for better touch targets */
+input[type=checkbox], input[type=radio] {
+  appearance: auto;
+  transform: scale(1.2);
+  border: none;
+  accent-color: var(--primary-color); /* Themed check color */
 }
 
 /* ========================================================= */
-/*  CORE THEME / LAYOUT                                      */
+/* CORE LAYOUT & TYPOGRAPHY                                 */
 /* ========================================================= */
-:root{
-  --background-color:#2c2c2e;
-  --text-color:#e0e0e0;
-  --container-bg:#ffffff;
-  --container-text:#333333;
-  --input-border:#ccc;
-  --input-bg:#f9f9f9;
-  --primary-color:#007bff;
-  --primary-hover:#0056b3;
-  --section-border:#dddddd;
-  --label-color:#555555;
-  --touch-target:44px;             /* WCAG / Apple HIG */
-}
-*{-webkit-tap-highlight-color:rgba(0,0,0,0);}
-
-body{
-  background:var(--background-color);
-  color:var(--text-color);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  margin:0;padding:0;
-  display:flex;justify-content:center;align-items:flex-start;
-  min-height:100vh;overflow-y:auto;
-}
-.container{
-  background:var(--container-bg);
-  color:var(--container-text);
-  max-width:850px;width:95%;
-  margin:20px auto;padding:25px;
-  border-radius:8px;
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
+body {
+  background: var(--background-color);
+  color: var(--container-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  overflow-y: auto;
 }
 
-form{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:20px 25px;
-}
-form h2{
-  grid-column:1/-1;
-  text-align:center;
-  margin-bottom:25px;
-  font-size:clamp(1.4rem,1.1vw+1rem,2.2rem);
-}
-.section-header{
-  grid-column:1/-1;
-  font-size:clamp(1.1rem,.9vw+1rem,1.6rem);
-  font-weight:600;
-  color:var(--primary-color);
-  margin-top:25px;
-  padding-bottom:8px;
-  border-bottom:2px solid var(--primary-color);
-}
-.full-width-section{grid-column:1/-1}
-
-/* labels & common inputs */
-label{display:block;font-weight:600;color:var(--label-color);font-size:.95em;margin-bottom:6px;}
-input:not([type=checkbox]):not([type=radio]),select,textarea{
-  width:100%;
-  padding:.65rem .75rem;
-  border:1px solid var(--input-border);
-  border-radius:5px;
-  font-size:1em;
-  background:var(--input-bg);
-  min-block-size:var(--touch-target);
-  transition:border-color .2s ease;
-}
-input:focus,select:focus,textarea:focus{
-  border-color:var(--primary-color);
-  outline:none;
-  box-shadow:0 0 0 2px rgba(0,123,255,.2);
-}
-textarea{resize:vertical;min-height:100px}
-
-/* touch-target label wrapper */
-.touch-target{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.5rem .75rem;min-block-size:var(--touch-target);
-  cursor:pointer;user-select:none;
-}
-.touch-target:active{transform:scale(.96);transition:transform 80ms cubic-bezier(.4,0,.2,1);}
-.touch-target:has(:focus-visible){outline:3px solid var(--primary-color);outline-offset:2px;}
-@media(prefers-reduced-motion:reduce){.touch-target:active{transition:none;}}
-
-/* group layouts */
-.checkbox-group,.radio-group{
-  display:flex;flex-wrap:wrap;gap:15px;
-  grid-column:1/-1;margin:10px 0;
-}
-.checkbox-group label,.radio-group label{font-weight:400;margin:0;color:var(--container-text)}
-
-/* -------- revised .input-group rules ---------------------- */
-/* base: single-column or column-flex rows */
-.input-group{
-  display:flex;flex-direction:column;gap:5px;
-  flex:1 1 auto;                 /* auto height on mobile   */
-  min-width:250px;               /* prevents tiny columns   */
-}
-/* when row-layout is active (≥ 768 px) */
-@media(min-width:768px){
-  .row-container .input-group{flex:1 1 250px;}  /* 250 px width */
+.container {
+  background: var(--container-bg);
+  color: var(--container-text);
+  max-width: 850px;
+  width: 95%;
+  margin: 25px auto;
+  padding: 30px;
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-main);
 }
 
-/* row container */
-.row-container{
-  grid-column:1/-1;
-  display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;
+form {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--gap-row) var(--gap-col);
 }
 
-.button-container{grid-column:1/-1;display:flex;justify-content:center;margin-top:30px;}
-button{
-  padding:14px 35px;border:none;border-radius:5px;
-  background:var(--primary-color);color:#fff;
-  font-size:1.1em;font-weight:600;
-  cursor:pointer;min-block-size:var(--touch-target);
-  transition:background-color .2s ease;
+form h2 {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin: 0 0 30px 0;
+  font-size: clamp(1.5rem, 1.2vw + 1rem, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.02em; /* Subtle tightening for headers */
 }
-button:hover{background:var(--primary-hover);}
 
-/* conditional blocks */
-.conditional-section{
-  display:none;
-  grid-column:1/-1;padding:15px;margin-top:15px;
-  border:1px solid var(--section-border);
-  border-radius:5px;background:#fdfdfd;
+.section-header {
+  grid-column: 1 / -1;
+  font-size: clamp(1.1rem, 0.9vw + 1rem, 1.5rem);
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-top: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--section-border);
+}
+
+.full-width-section { grid-column: 1 / -1; }
+
+/* ========================================================= */
+/* FORM ELEMENTS & GROUPS                                   */
+/* ========================================================= */
+
+/* --- Labels & Common Inputs --- */
+label {
+  display: block;
+  font-weight: 500; /* Medium weight for modern look */
+  color: var(--label-color);
+  font-size: 0.9em;
+  margin-bottom: 8px;
+}
+
+input:not([type=checkbox]):not([type=radio]), select, textarea {
+  width: 100%;
+  padding: .65rem .85rem;
+  border: 1px solid var(--input-border);
+  border-radius: var(--border-radius-md);
+  font-size: 1em;
+  background: var(--input-bg);
+  min-block-size: var(--touch-target);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--primary-color);
+  outline: none;
+  box-shadow: 0 0 0 3px var(--input-focus-ring); /* Modern focus ring */
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* --- Touch-friendly Labels (for checkboxes/radios) --- */
+.touch-target {
+  display: inline-flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .5rem .75rem;
+  min-block-size: var(--touch-target);
+  cursor: pointer;
+  user-select: none;
+  border-radius: var(--border-radius-md);
+  transition: background-color 0.15s ease, transform 80ms cubic-bezier(.4,0,.2,1);
+}
+.touch-target:hover { background-color: rgba(0,0,0,0.04); }
+.touch-target:active { transform: scale(.97); }
+.touch-target:has(:focus-visible) {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .touch-target:active { transition: none; }
+}
+
+/* --- Group Layouts --- */
+.checkbox-group, .radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  grid-column: 1 / -1;
+  margin: 10px 0;
+}
+.checkbox-group label, .radio-group label {
+  font-weight: 400; /* Regular weight for options */
+  margin: 0;
+  color: var(--container-text);
+}
+
+/* --- General Input & Row Containers --- */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1 1 auto;
+  min-width: 250px;
+}
+
+/* This container holds ETP/B2B and is toggled by JS. This ensures it lays out correctly when made visible. */
+.input-group-row {
+  grid-column: 1 / -1;
+  gap: var(--gap-col);
+}
+
+.row-container {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gap-row) var(--gap-col);
+  align-items: flex-end;
+}
+@media(min-width: 768px){
+  .row-container .input-group{ flex: 1 1 250px; }
+}
+
+/* --- Buttons --- */
+.button-container {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+button {
+  padding: 14px 40px;
+  border: none;
+  border-radius: var(--border-radius-md);
+  background: var(--primary-color);
+  color: #fff;
+  font-size: 1.05em;
+  font-weight: 600;
+  cursor: pointer;
+  min-block-size: var(--touch-target);
+  transition: background-color .2s ease, transform .1s ease;
+}
+button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+button:active {
+  transform: translateY(-1px);
+}
+
+/* ========================================================= */
+/* CONDITIONAL & RESPONSIVE                                 */
+/* ========================================================= */
+
+/* --- Conditionally Visible Sections --- */
+.conditional-section {
+  display: none; /* Controlled by JS */
+  grid-column: 1 / -1;
+  padding: 20px;
+  margin-top: 15px;
+  border: 1px solid var(--section-border);
+  border-radius: var(--border-radius-lg);
+  background: #f9fafb; /* A very faint off-white to distinguish from main container */
 }
 .conditional-section .section-header,
-.conditional-section .section-subheader{
-  margin-top:0;padding-bottom:8px;font-size:1.2em;
-  color:var(--label-color);
-  border-bottom:1px solid var(--section-border);
-  margin-bottom:15px;
+.conditional-section .section-subheader {
+  margin-top: 0;
+  padding-bottom: 8px;
+  font-size: 1.2em;
+  color: var(--label-color);
+  border-bottom: 1px solid var(--section-border);
+  margin-bottom: 15px;
 }
-.conditional-section .section-subheader{
-  font-size:1.1em;font-weight:600;color:var(--container-text);margin-top:15px;
+.conditional-section .section-subheader {
+  font-size: 1.1em;
+  font-weight: 600;
+  color: var(--container-text);
+  margin-top: 15px;
 }
 
-/* responsive tweaks */
-@media(max-width:768px){
-  .container{width:95%;padding:15px;margin-top:10px}
-  form{grid-template-columns:1fr;gap:15px}
-  .row-container{flex-direction:column;gap:15px;align-items:stretch}
-  .row-container .input-group{min-width:0}
-  button{width:100%;padding:15px;font-size:1em}
-  .conditional-section{padding:10px}
+/* --- Responsive Breakpoints --- */
+@media (max-width: 768px) {
+  .container { width: 95%; padding: 20px; margin-top: 10px; }
+  form { grid-template-columns: 1fr; gap: var(--gap-row); }
+  .row-container { flex-direction: column; gap: var(--gap-row); align-items: stretch; }
+  .row-container .input-group { min-width: 0; }
+  .input-group-row { flex-direction: column; gap: var(--gap-row); }
+  button { width: 100%; padding: 15px; }
+  .conditional-section { padding: 15px; }
 }
-@media(max-width:480px){
-  body{font-size:15px}
-  .container{width:100%;margin:0;padding:10px;border-radius:0;box-shadow:none}
-  input:not([type=checkbox]):not([type=radio]),select,textarea{padding:10px}
-  button{padding:12px}
+
+@media (max-width: 480px) {
+  body { font-size: 15px; }
+  .container { width: 100%; margin: 0; padding: 15px; border-radius: 0; box-shadow: none; }
+  input:not([type=checkbox]):not([type=radio]), select, textarea { padding: 12px; }
+  button { padding: 14px; }
 }
 </style>
 </head>
@@ -190,7 +294,6 @@ button:hover{background:var(--primary-hover);}
 <form id="travelRequestForm">
   <h2>Travel Request Form</h2>
 
-  <!-- ============ TRAVELER INFO ============ -->
   <div class="section-header full-width-section">Traveler Information</div>
 
   <div class="input-group home-mtc-container">
@@ -225,7 +328,6 @@ button:hover{background:var(--primary-hover);}
            inputmode="tel" autocomplete="tel-national">
   </div>
 
-  <!-- ============ EVENT SUMMARY ============ -->
   <div class="section-header full-width-section">Event Summary</div>
 
   <div class="input-group">
@@ -245,7 +347,6 @@ button:hover{background:var(--primary-hover);}
     <input type="date" id="TravelEnd" name="TravelEnd" required>
   </div>
 
-  <!-- ============ REQUIREMENTS ============ -->
   <div class="section-header full-width-section">Travel Requirements</div>
   <div class="checkbox-group">
     <label class="touch-target"><input type="checkbox" id="AirReservation">Air</label>
@@ -256,7 +357,6 @@ button:hover{background:var(--primary-hover);}
     <label class="touch-target"><input type="checkbox" id="B2B">B2B</label>
   </div>
 
-  <!-- ETP / B2B row -->
   <div class="input-group-row">
     <div id="ETPContainer" class="input-group" style="display:none;">
       <label for="ETPDropdown">ETP Type</label>
@@ -271,7 +371,6 @@ button:hover{background:var(--primary-hover);}
     </div>
   </div>
 
-  <!-- ==================== AIR SECTION ==================== -->
   <div id="AirSection" class="conditional-section">
     <div class="section-header">Air Reservation</div>
     <div class="radio-group">
@@ -305,7 +404,6 @@ button:hover{background:var(--primary-hover);}
     </div>
   </div>
 
-  <!-- ==================== CAR SECTION ==================== -->
   <div id="CarSection" class="conditional-section">
     <div class="section-header">Car Rental</div>
     <div class="checkbox-group">
@@ -322,7 +420,6 @@ button:hover{background:var(--primary-hover);}
     </div>
   </div>
 
-  <!-- ==================== HOTEL SECTION ==================== -->
   <div id="HotelSection" class="conditional-section">
     <div class="section-header">Hotel</div>
     <div class="row-container">
@@ -340,7 +437,6 @@ button:hover{background:var(--primary-hover);}
     </div>
   </div>
 
-  <!-- ==================== COMMENTS ==================== -->
   <div class="section-header full-width-section">Comments</div>
   <div class="input-group full-width-section">
     <label for="Comments">Additional Comments or Special Instructions</label>
@@ -351,7 +447,6 @@ button:hover{background:var(--primary-hover);}
 </form>
 </div>
 
-<!-- ---------- SCRIPTS ---------- -->
 <script src="./pdf-lib.min.js"></script>
 <script>
 /* ---------- visibility helpers ---------- */
