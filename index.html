@@ -1,50 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Travel Request Form</title>
 
 <style>
-/* ----------------- patch begin ----------------- */
+/* ========================================================= */
+/*  GLOBAL PATCHES (first so they apply to everything)       */
+/* ========================================================= */
+*,*::before,*::after{box-sizing:border-box;}   /* stop overflow   */
+html,body{overflow-x:hidden;}                  /* no side scroll  */
 
-/* 1. include borders & padding in declared width → stops overflow */
-*, *::before, *::after { box-sizing: border-box; }
-
-/* 2. never allow a control to exceed its parent’s width */
+/* -------- control width/height normalisation ------------- */
 input:not([type=checkbox]):not([type=radio]),
-select,
-textarea {
-  max-inline-size: 100%;
+select,textarea{max-inline-size:100%;}
+
+input[type=date],input[type=time],select{
+  height:44px;line-height:1.2;padding-block:.5rem;
 }
 
-/* 3. kill horizontal scrolling side-effect */
-html, body { overflow-x: hidden; }
-
-/* 4. normalise heights across WebKit controls */
-input[type=date],
-input[type=time],
-select {
-  height: var(--touch-target);          /* = 44 px */
-  line-height: 1.2;                     /* text stays vertically centred */
-  padding-block: .5rem;                 /* same visual padding */
+/* -------- native but enlarged check/radio ---------------- */
+input[type=checkbox],input[type=radio]{
+  appearance:auto;          /* use platform glyph            */
+  transform:scale(1.25);    /* bigger tap target             */
+  border:none;              /* remove custom outline         */
+  accent-color:#007bff;     /* keep theme colour             */
 }
 
-/* 5. revert to native glyphs but keep larger hit-area */
-input[type=checkbox],
-input[type=radio] {
-  appearance: auto;                     /* let iOS draw it */
-  transform: scale(1.25);               /* visual enlargement */
-  border: none;                         /* drop custom border */
-  accent-color: var(--primary-color);   /* keep blue tint */
-}
-
-/* optional: adjust wrapper so the enlarged glyph doesn't clip */
-.touch-target {
-  padding-inline: 0.75rem 1rem;         /* clip-safe left/right padding */
-}
-/* ------------------ patch end ------------------ */
-/* ---------- palette ---------- */
+/* ========================================================= */
+/*  CORE THEME / LAYOUT                                      */
+/* ========================================================= */
 :root{
   --background-color:#2c2c2e;
   --text-color:#e0e0e0;
@@ -56,93 +44,132 @@ input[type=radio] {
   --primary-hover:#0056b3;
   --section-border:#dddddd;
   --label-color:#555555;
-  --touch-target:44px;           /* WCAG / Apple HIG */
+  --touch-target:44px;             /* WCAG / Apple HIG */
 }
 *{-webkit-tap-highlight-color:rgba(0,0,0,0);}
+
 body{
-  background:var(--background-color);color:var(--text-color);
+  background:var(--background-color);
+  color:var(--text-color);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  margin:0;padding:0;display:flex;justify-content:center;align-items:flex-start;
+  margin:0;padding:0;
+  display:flex;justify-content:center;align-items:flex-start;
   min-height:100vh;overflow-y:auto;
 }
 .container{
-  background:var(--container-bg);color:var(--container-text);
-  max-width:850px;width:95%;margin:20px auto;padding:25px;
-  border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,.15);
+  background:var(--container-bg);
+  color:var(--container-text);
+  max-width:850px;width:95%;
+  margin:20px auto;padding:25px;
+  border-radius:8px;
+  box-shadow:0 4px 12px rgba(0,0,0,.15);
 }
-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px 25px;}
-form h2{grid-column:1/-1;text-align:center;margin-bottom:25px;
-  font-size:clamp(1.4rem,1.1vw+1rem,2.2rem);}
-.section-header{grid-column:1/-1;font-size:clamp(1.1rem,.9vw+1rem,1.6rem);font-weight:600;
-  color:var(--primary-color);margin-top:25px;padding-bottom:8px;border-bottom:2px solid var(--primary-color);}
+
+form{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:20px 25px;
+}
+form h2{
+  grid-column:1/-1;
+  text-align:center;
+  margin-bottom:25px;
+  font-size:clamp(1.4rem,1.1vw+1rem,2.2rem);
+}
+.section-header{
+  grid-column:1/-1;
+  font-size:clamp(1.1rem,.9vw+1rem,1.6rem);
+  font-weight:600;
+  color:var(--primary-color);
+  margin-top:25px;
+  padding-bottom:8px;
+  border-bottom:2px solid var(--primary-color);
+}
 .full-width-section{grid-column:1/-1}
 
+/* labels & common inputs */
 label{display:block;font-weight:600;color:var(--label-color);font-size:.95em;margin-bottom:6px;}
 input:not([type=checkbox]):not([type=radio]),select,textarea{
-  width:100%;padding:.65rem .75rem;border:1px solid var(--input-border);border-radius:5px;
-  box-sizing:border-box;font-size:1em;background:var(--input-bg);min-block-size:var(--touch-target);
+  width:100%;
+  padding:.65rem .75rem;
+  border:1px solid var(--input-border);
+  border-radius:5px;
+  font-size:1em;
+  background:var(--input-bg);
+  min-block-size:var(--touch-target);
   transition:border-color .2s ease;
 }
-input:focus,select:focus,textarea:focus{border-color:var(--primary-color);outline:none;
-  box-shadow:0 0 0 2px rgba(0,123,255,.2);}
+input:focus,select:focus,textarea:focus{
+  border-color:var(--primary-color);
+  outline:none;
+  box-shadow:0 0 0 2px rgba(0,123,255,.2);
+}
 textarea{resize:vertical;min-height:100px}
 
-/* ------ touch-target wrapper ------ */
+/* touch-target label wrapper */
 .touch-target{
-  display:inline-flex;align-items:center;gap:.5rem;padding:.5rem .75rem;
-  min-block-size:var(--touch-target);cursor:pointer;user-select:none;
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.5rem .75rem;min-block-size:var(--touch-target);
+  cursor:pointer;user-select:none;
 }
 .touch-target:active{transform:scale(.96);transition:transform 80ms cubic-bezier(.4,0,.2,1);}
 .touch-target:has(:focus-visible){outline:3px solid var(--primary-color);outline-offset:2px;}
-@media (prefers-reduced-motion:reduce){.touch-target:active{transition:none;}}
+@media(prefers-reduced-motion:reduce){.touch-target:active{transition:none;}}
 
-/* custom checkbox / radio */
-input[type=checkbox],input[type=radio]{
-  appearance:none;inline-size:1.2rem;block-size:1.2rem;border:2px solid var(--primary-color);
-  border-radius:.25rem;position:relative;margin:0;cursor:pointer;
+/* group layouts */
+.checkbox-group,.radio-group{
+  display:flex;flex-wrap:wrap;gap:15px;
+  grid-column:1/-1;margin:10px 0;
 }
-input[type=checkbox]:checked::after,input[type=radio]:checked::after{
-  content:"";position:absolute;inset:0;background:var(--primary-color);border-radius:inherit;
-}
-input[type=radio]{border-radius:50%;}
-input[type=radio]::after{border-radius:50%;}
-
-/* groups */
-.checkbox-group,.radio-group{display:flex;flex-wrap:wrap;gap:15px;grid-column:1/-1;margin:10px 0;}
 .checkbox-group label,.radio-group label{font-weight:400;margin:0;color:var(--container-text)}
 
-/* --- replace the old rules --- */
-
-/* base: column layout or single-column grid */
+/* -------- revised .input-group rules ---------------------- */
+/* base: single-column or column-flex rows */
 .input-group{
-  display:flex;
-  flex-direction:column;
-  gap:5px;
-  flex: 1 1 auto;          /* auto height -> no vertical gap   */
-  min-width:250px;         /* still prevents crazy narrow cols */
+  display:flex;flex-direction:column;gap:5px;
+  flex:1 1 auto;                 /* auto height on mobile   */
+  min-width:250px;               /* prevents tiny columns   */
+}
+/* when row-layout is active (≥ 768 px) */
+@media(min-width:768px){
+  .row-container .input-group{flex:1 1 250px;}  /* 250 px width */
 }
 
-/* row layout (desktop / tablet) */
-@media (min-width:768px){
-  .row-container .input-group{
-    flex: 1 1 250px;       /* 250 px width, NOT height          */
-  }
-}/* button */
+/* row container */
+.row-container{
+  grid-column:1/-1;
+  display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;
+}
+
+.button-container{grid-column:1/-1;display:flex;justify-content:center;margin-top:30px;}
 button{
-  padding:14px 35px;border:none;border-radius:5px;background:var(--primary-color);color:#fff;
-  font-size:1.1em;font-weight:600;cursor:pointer;min-block-size:var(--touch-target);
+  padding:14px 35px;border:none;border-radius:5px;
+  background:var(--primary-color);color:#fff;
+  font-size:1.1em;font-weight:600;
+  cursor:pointer;min-block-size:var(--touch-target);
   transition:background-color .2s ease;
 }
 button:hover{background:var(--primary-hover);}
 
 /* conditional blocks */
-.conditional-section{display:none;grid-column:1/-1;padding:15px;margin-top:15px;
-  border:1px solid var(--section-border);border-radius:5px;background:#fdfdfd;}
+.conditional-section{
+  display:none;
+  grid-column:1/-1;padding:15px;margin-top:15px;
+  border:1px solid var(--section-border);
+  border-radius:5px;background:#fdfdfd;
+}
 .conditional-section .section-header,
-.conditional-section .section-subheader{margin-top:0;padding-bottom:8px;font-size:1.2em;
-  color:var(--label-color);border-bottom:1px solid var(--section-border);margin-bottom:15px;}
-.conditional-section .section-subheader{font-size:1.1em;font-weight:600;color:var(--container-text);margin-top:15px;}
+.conditional-section .section-subheader{
+  margin-top:0;padding-bottom:8px;font-size:1.2em;
+  color:var(--label-color);
+  border-bottom:1px solid var(--section-border);
+  margin-bottom:15px;
+}
+.conditional-section .section-subheader{
+  font-size:1.1em;font-weight:600;color:var(--container-text);margin-top:15px;
+}
 
+/* responsive tweaks */
 @media(max-width:768px){
   .container{width:95%;padding:15px;margin-top:10px}
   form{grid-template-columns:1fr;gap:15px}
@@ -165,28 +192,26 @@ button:hover{background:var(--primary-hover);}
 <form id="travelRequestForm">
   <h2>Travel Request Form</h2>
 
-  <!-- ==================== TRAVELER INFO ==================== -->
+  <!-- ============ TRAVELER INFO ============ -->
   <div class="section-header full-width-section">Traveler Information</div>
 
   <div class="input-group home-mtc-container">
     <label for="homeMTC">Home MTC</label>
     <select id="homeMTC" name="homeMTC" autocomplete="organization">
       <option value="" disabled selected>Select MTC</option>
-      <option value="LVN">LVN</option><option value="HST/MCAT">HST/MCAT</option>
-      <option value="CHF">CHF</option><option value="DGE">DGE</option>
-      <option value="FIG">FIG</option><option value="GOW">GOW</option>
+      <option>LVN</option><option>HST/MCAT</option><option>CHF</option>
+      <option>DGE</option><option>FIG</option><option>GOW</option>
     </select>
   </div>
 
   <div class="input-group">
     <label for="travelerName">Name (First Last)</label>
-    <input type="text" id="travelerName" name="travelerName"
-           autocomplete="name" required>
+    <input id="travelerName" name="travelerName" autocomplete="name" required>
   </div>
 
   <div class="input-group">
-    <label for="employeeNumber">Employee Number</label>
-    <input type="text" id="employeeNumber" name="employeeNumber"
+    <label for="employeeNumber">Employee #</label>
+    <input id="employeeNumber" name="employeeNumber"
            inputmode="numeric" pattern="[0-9]*" autocomplete="off">
   </div>
 
@@ -202,16 +227,16 @@ button:hover{background:var(--primary-hover);}
            inputmode="tel" autocomplete="tel-national">
   </div>
 
-  <!-- ==================== EVENT SUMMARY ==================== -->
+  <!-- ============ EVENT SUMMARY ============ -->
   <div class="section-header full-width-section">Event Summary</div>
 
   <div class="input-group">
     <label for="TrainingLocation">Training Location (City, ST)</label>
-    <input type="text" id="TrainingLocation" name="TrainingLocation" required>
+    <input id="TrainingLocation" name="TrainingLocation" required>
   </div>
   <div class="input-group">
     <label for="UID">UID</label>
-    <input type="text" id="UID" name="UID" required>
+    <input id="UID" name="UID" required>
   </div>
   <div class="input-group">
     <label for="TravelStart">Travel Start Date</label>
@@ -222,15 +247,15 @@ button:hover{background:var(--primary-hover);}
     <input type="date" id="TravelEnd" name="TravelEnd" required>
   </div>
 
-  <!-- ==================== REQUIREMENTS ==================== -->
+  <!-- ============ REQUIREMENTS ============ -->
   <div class="section-header full-width-section">Travel Requirements</div>
   <div class="checkbox-group">
-    <label class="touch-target"><input type="checkbox" id="AirReservation" name="AirReservation">Air</label>
-    <label class="touch-target"><input type="checkbox" id="HotelReservation" name="HotelReservation">Hotel</label>
-    <label class="touch-target"><input type="checkbox" id="CarRental" name="CarRental">Car</label>
-    <label class="touch-target"><input type="checkbox" id="POV" name="POV">POV</label>
-    <label class="touch-target"><input type="checkbox" id="ETP" name="ETP">ETP</label>
-    <label class="touch-target"><input type="checkbox" id="B2B" name="B2B">B2B</label>
+    <label class="touch-target"><input type="checkbox" id="AirReservation">Air</label>
+    <label class="touch-target"><input type="checkbox" id="HotelReservation">Hotel</label>
+    <label class="touch-target"><input type="checkbox" id="CarRental">Car</label>
+    <label class="touch-target"><input type="checkbox" id="POV">POV</label>
+    <label class="touch-target"><input type="checkbox" id="ETP">ETP</label>
+    <label class="touch-target"><input type="checkbox" id="B2B">B2B</label>
   </div>
 
   <!-- ETP / B2B row -->
@@ -238,14 +263,13 @@ button:hover{background:var(--primary-hover);}
     <div id="ETPContainer" class="input-group" style="display:none;">
       <label for="ETPDropdown">ETP Type</label>
       <select id="ETPDropdown" name="ETPDropdown">
-        <option value="">N/A</option><option value="PerDiem">Per Diem</option>
-        <option value="RentalVehicle">Rental Vehicle</option><option value="Baggage">Baggage</option>
-        <option value="Prepositioning">Prepositioning</option><option value="Other">Other</option>
+        <option>N/A</option><option>Per Diem</option><option>Rental Vehicle</option>
+        <option>Baggage</option><option>Prepositioning</option><option>Other</option>
       </select>
     </div>
     <div id="B2BContainer" class="input-group" style="display:none;">
       <label for="B2BUID">B2B UID</label>
-      <input type="text" id="B2BUID" name="B2BUID">
+      <input id="B2BUID" name="B2BUID">
     </div>
   </div>
 
