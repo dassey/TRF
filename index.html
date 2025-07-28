@@ -6,6 +6,44 @@
 <title>Travel Request Form</title>
 
 <style>
+/* ----------------- patch begin ----------------- */
+
+/* 1. include borders & padding in declared width → stops overflow */
+*, *::before, *::after { box-sizing: border-box; }
+
+/* 2. never allow a control to exceed its parent’s width */
+input:not([type=checkbox]):not([type=radio]),
+select,
+textarea {
+  max-inline-size: 100%;
+}
+
+/* 3. kill horizontal scrolling side-effect */
+html, body { overflow-x: hidden; }
+
+/* 4. normalise heights across WebKit controls */
+input[type=date],
+input[type=time],
+select {
+  height: var(--touch-target);          /* = 44 px */
+  line-height: 1.2;                     /* text stays vertically centred */
+  padding-block: .5rem;                 /* same visual padding */
+}
+
+/* 5. revert to native glyphs but keep larger hit-area */
+input[type=checkbox],
+input[type=radio] {
+  appearance: auto;                     /* let iOS draw it */
+  transform: scale(1.25);               /* visual enlargement */
+  border: none;                         /* drop custom border */
+  accent-color: var(--primary-color);   /* keep blue tint */
+}
+
+/* optional: adjust wrapper so the enlarged glyph doesn't clip */
+.touch-target {
+  padding-inline: 0.75rem 1rem;         /* clip-safe left/right padding */
+}
+/* ------------------ patch end ------------------ */
 /* ---------- palette ---------- */
 :root{
   --background-color:#2c2c2e;
