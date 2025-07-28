@@ -111,13 +111,23 @@ input[type=radio]::after{border-radius:50%;}
 .checkbox-group,.radio-group{display:flex;flex-wrap:wrap;gap:15px;grid-column:1/-1;margin:10px 0;}
 .checkbox-group label,.radio-group label{font-weight:400;margin:0;color:var(--container-text)}
 
-/* layout helpers */
-.input-group{display:flex;flex-direction:column;gap:5px;flex:1 1 250px;}
-.row-container{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;}
-.row-container .input-group{min-width:250px}
-.button-container{grid-column:1/-1;display:flex;justify-content:center;margin-top:30px;}
+/* --- replace the old rules --- */
 
-/* button */
+/* base: column layout or single-column grid */
+.input-group{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  flex: 1 1 auto;          /* auto height -> no vertical gap   */
+  min-width:250px;         /* still prevents crazy narrow cols */
+}
+
+/* row layout (desktop / tablet) */
+@media (min-width:768px){
+  .row-container .input-group{
+    flex: 1 1 250px;       /* 250 px width, NOT height          */
+  }
+}/* button */
 button{
   padding:14px 35px;border:none;border-radius:5px;background:var(--primary-color);color:#fff;
   font-size:1.1em;font-weight:600;cursor:pointer;min-block-size:var(--touch-target);
