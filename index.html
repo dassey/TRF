@@ -4,185 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Travel Request Form</title>
-
-<style>
-/* ========================================================= */
-/*  GLOBAL PATCHES (first so they apply to everything)       */
-/* ========================================================= */
-*,*::before,*::after{box-sizing:border-box;}   /* stop overflow   */
-html,body{overflow-x:hidden;}                  /* no side scroll  */
-
-/* -------- control width/height normalisation ------------- */
-input:not([type=checkbox]):not([type=radio]),
-select,textarea{max-inline-size:100%;}
-
-input[type=date],input[type=time],select{
-  height:44px;line-height:1.2;padding-block:.5rem;
-}
-
-/* -------- native but enlarged check/radio ---------------- */
-input[type=checkbox],input[type=radio]{
-  appearance:auto;          /* use platform glyph            */
-  transform:scale(1.25);    /* bigger tap target             */
-  border:none;              /* remove custom outline         */
-  accent-color:#007bff;     /* keep theme colour             */
-}
-
-/* ========================================================= */
-/*  CORE THEME / LAYOUT                                      */
-/* ========================================================= */
-:root{
-  --background-color:#2c2c2e;
-  --text-color:#e0e0e0;
-  --container-bg:#ffffff;
-  --container-text:#333333;
-  --input-border:#ccc;
-  --input-bg:#f9f9f9;
-  --primary-color:#007bff;
-  --primary-hover:#0056b3;
-  --section-border:#dddddd;
-  --label-color:#555555;
-  --touch-target:44px;             /* WCAG / Apple HIG */
-}
-*{-webkit-tap-highlight-color:rgba(0,0,0,0);}
-
-body{
-  background:var(--background-color);
-  color:var(--text-color);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  margin:0;padding:0;
-  display:flex;justify-content:center;align-items:flex-start;
-  min-height:100vh;overflow-y:auto;
-}
-.container{
-  background:var(--container-bg);
-  color:var(--container-text);
-  max-width:850px;width:95%;
-  margin:20px auto;padding:25px;
-  border-radius:8px;
-  box-shadow:0 4px 12px rgba(0,0,0,.15);
-}
-
-form{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:20px 25px;
-}
-form h2{
-  grid-column:1/-1;
-  text-align:center;
-  margin-bottom:25px;
-  font-size:clamp(1.4rem,1.1vw+1rem,2.2rem);
-}
-.section-header{
-  grid-column:1/-1;
-  font-size:clamp(1.1rem,.9vw+1rem,1.6rem);
-  font-weight:600;
-  color:var(--primary-color);
-  margin-top:25px;
-  padding-bottom:8px;
-  border-bottom:2px solid var(--primary-color);
-}
-.full-width-section{grid-column:1/-1}
-
-/* labels & common inputs */
-label{display:block;font-weight:600;color:var(--label-color);font-size:.95em;margin-bottom:6px;}
-input:not([type=checkbox]):not([type=radio]),select,textarea{
-  width:100%;
-  padding:.65rem .75rem;
-  border:1px solid var(--input-border);
-  border-radius:5px;
-  font-size:1em;
-  background:var(--input-bg);
-  min-block-size:var(--touch-target);
-  transition:border-color .2s ease;
-}
-input:focus,select:focus,textarea:focus{
-  border-color:var(--primary-color);
-  outline:none;
-  box-shadow:0 0 0 2px rgba(0,123,255,.2);
-}
-textarea{resize:vertical;min-height:100px}
-
-/* touch-target label wrapper */
-.touch-target{
-  display:inline-flex;align-items:center;gap:.5rem;
-  padding:.5rem .75rem;min-block-size:var(--touch-target);
-  cursor:pointer;user-select:none;
-}
-.touch-target:active{transform:scale(.96);transition:transform 80ms cubic-bezier(.4,0,.2,1);}
-.touch-target:has(:focus-visible){outline:3px solid var(--primary-color);outline-offset:2px;}
-@media(prefers-reduced-motion:reduce){.touch-target:active{transition:none;}}
-
-/* group layouts */
-.checkbox-group,.radio-group{
-  display:flex;flex-wrap:wrap;gap:15px;
-  grid-column:1/-1;margin:10px 0;
-}
-.checkbox-group label,.radio-group label{font-weight:400;margin:0;color:var(--container-text)}
-
-/* -------- revised .input-group rules ---------------------- */
-/* base: single-column or column-flex rows */
-.input-group{
-  display:flex;flex-direction:column;gap:5px;
-  flex:1 1 auto;                 /* auto height on mobile   */
-  min-width:250px;               /* prevents tiny columns   */
-}
-/* when row-layout is active (≥ 768 px) */
-@media(min-width:768px){
-  .row-container .input-group{flex:1 1 250px;}  /* 250 px width */
-}
-
-/* row container */
-.row-container{
-  grid-column:1/-1;
-  display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end;
-}
-
-.button-container{grid-column:1/-1;display:flex;justify-content:center;margin-top:30px;}
-button{
-  padding:14px 35px;border:none;border-radius:5px;
-  background:var(--primary-color);color:#fff;
-  font-size:1.1em;font-weight:600;
-  cursor:pointer;min-block-size:var(--touch-target);
-  transition:background-color .2s ease;
-}
-button:hover{background:var(--primary-hover);}
-
-/* conditional blocks */
-.conditional-section{
-  display:none;
-  grid-column:1/-1;padding:15px;margin-top:15px;
-  border:1px solid var(--section-border);
-  border-radius:5px;background:#fdfdfd;
-}
-.conditional-section .section-header,
-.conditional-section .section-subheader{
-  margin-top:0;padding-bottom:8px;font-size:1.2em;
-  color:var(--label-color);
-  border-bottom:1px solid var(--section-border);
-  margin-bottom:15px;
-}
-.conditional-section .section-subheader{
-  font-size:1.1em;font-weight:600;color:var(--container-text);margin-top:15px;
-}
-
-/* responsive tweaks */
-@media(max-width:768px){
-  .container{width:95%;padding:15px;margin-top:10px}
-  form{grid-template-columns:1fr;gap:15px}
-  .row-container{flex-direction:column;gap:15px;align-items:stretch}
-  .row-container .input-group{min-width:0}
-  button{width:100%;padding:15px;font-size:1em}
-  .conditional-section{padding:10px}
-}
-@media(max-width:480px){
-  body{font-size:15px}
-  .container{width:100%;margin:0;padding:10px;border-radius:0;box-shadow:none}
-  input:not([type=checkbox]):not([type=radio]),select,textarea{padding:10px}
-  button{padding:12px}
-}
-</style>
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -190,7 +12,6 @@ button:hover{background:var(--primary-hover);}
 <form id="travelRequestForm">
   <h2>Travel Request Form</h2>
 
-  <!-- ============ TRAVELER INFO ============ -->
   <div class="section-header full-width-section">Traveler Information</div>
 
   <div class="input-group home-mtc-container">
@@ -225,7 +46,6 @@ button:hover{background:var(--primary-hover);}
            inputmode="tel" autocomplete="tel-national">
   </div>
 
-  <!-- ============ EVENT SUMMARY ============ -->
   <div class="section-header full-width-section">Event Summary</div>
 
   <div class="input-group">
@@ -245,7 +65,6 @@ button:hover{background:var(--primary-hover);}
     <input type="date" id="TravelEnd" name="TravelEnd" required>
   </div>
 
-  <!-- ============ REQUIREMENTS ============ -->
   <div class="section-header full-width-section">Travel Requirements</div>
   <div class="checkbox-group">
     <label class="touch-target"><input type="checkbox" id="AirReservation">Air</label>
@@ -256,7 +75,6 @@ button:hover{background:var(--primary-hover);}
     <label class="touch-target"><input type="checkbox" id="B2B">B2B</label>
   </div>
 
-  <!-- ETP / B2B row -->
   <div class="input-group-row">
     <div id="ETPContainer" class="input-group" style="display:none;">
       <label for="ETPDropdown">ETP Type</label>
@@ -271,7 +89,6 @@ button:hover{background:var(--primary-hover);}
     </div>
   </div>
 
-  <!-- ==================== AIR SECTION ==================== -->
   <div id="AirSection" class="conditional-section">
     <div class="section-header">Air Reservation</div>
     <div class="radio-group">
@@ -305,7 +122,6 @@ button:hover{background:var(--primary-hover);}
     </div>
   </div>
 
-  <!-- ==================== CAR SECTION ==================== -->
   <div id="CarSection" class="conditional-section">
     <div class="section-header">Car Rental</div>
     <div class="checkbox-group">
@@ -322,7 +138,6 @@ button:hover{background:var(--primary-hover);}
     </div>
   </div>
 
-  <!-- ==================== HOTEL SECTION ==================== -->
   <div id="HotelSection" class="conditional-section">
     <div class="section-header">Hotel</div>
     <div class="row-container">
@@ -340,7 +155,6 @@ button:hover{background:var(--primary-hover);}
     </div>
   </div>
 
-  <!-- ==================== COMMENTS ==================== -->
   <div class="section-header full-width-section">Comments</div>
   <div class="input-group full-width-section">
     <label for="Comments">Additional Comments or Special Instructions</label>
@@ -351,205 +165,7 @@ button:hover{background:var(--primary-hover);}
 </form>
 </div>
 
-<!-- ---------- SCRIPTS ---------- -->
 <script src="./pdf-lib.min.js"></script>
-<script>
-/* ---------- visibility helpers ---------- */
-const setElementDisplay=(id,show)=>{const e=document.getElementById(id);if(e)e.style.display=show?'block':'none'};
-const setFlexElementDisplay=(id,show)=>{const e=document.getElementById(id);if(e)e.style.display=show?'flex':'none'};
-function updateInputGroupRowDisplay(){
-  const show=document.getElementById('ETPContainer').style.display!=='none'||document.getElementById('B2BContainer').style.display!=='none';
-  document.querySelector('.input-group-row').style.display=show?'flex':'none';
-}
-
-/* ---------- dynamic show/hide ---------- */
-document.getElementById('ETP').addEventListener('change',function(){setFlexElementDisplay('ETPContainer',this.checked);updateInputGroupRowDisplay()});
-document.getElementById('B2B').addEventListener('change',function(){setFlexElementDisplay('B2BContainer',this.checked);updateInputGroupRowDisplay()});
-document.getElementById('AirReservation').addEventListener('change',function(){
-  const show=this.checked;setElementDisplay('AirSection',show);
-  const trip=document.querySelector('input[name="TripType"]:checked');
-  setElementDisplay('AirReturn',show&&trip&&trip.value==='RoundTrip');
-});
-document.querySelectorAll('input[name="TripType"]').forEach(r=>r.addEventListener('change',function(){
-  setElementDisplay('AirReturn',document.getElementById('AirReservation').checked&&this.value==='RoundTrip');
-}));
-document.getElementById('CarRental').addEventListener('change',function(){setElementDisplay('CarSection',this.checked)});
-document.getElementById('HotelReservation').addEventListener('change',function(){setElementDisplay('HotelSection',this.checked)});
-
-/* ---------- auto-populate helpers ---------- */
-const addMinutes=(t,m)=>{if(!t)return'';const[h,min]=t.split(':').map(Number);const d=new Date();
-  d.setHours(h,min+m,0,0);return`${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`};
-
-document.getElementById('TravelStart').addEventListener('change',e=>{
-  ['DepDate','HotelCheckIn','CarDate'].forEach(id=>document.getElementById(id).value=e.target.value);
-});
-document.getElementById('TravelEnd').addEventListener('change',e=>{
-  ['RetDepDate','HotelCheckOut','CarDropDate'].forEach(id=>document.getElementById(id).value=e.target.value);
-});
-document.getElementById('DepArrLocation').addEventListener('input',e=>{
-  const v=e.target.value.toUpperCase();e.target.value=v;['RetDepLocation','CarPickUp'].forEach(id=>document.getElementById(id).value=v);
-});
-document.getElementById('DepLocation').addEventListener('input',e=>{
-  const v=e.target.value.toUpperCase();e.target.value=v;['RetArrLocation','CarDrop'].forEach(id=>document.getElementById(id).value=v);
-});
-document.getElementById('DepArrTime').addEventListener('input',e=>document.getElementById('CarPUTime').value=addMinutes(e.target.value,30));
-document.getElementById('RetDepTime').addEventListener('input',e=>document.getElementById('CarDropTime').value=addMinutes(e.target.value,-120));
-
-/* ---------- on load ---------- */
-window.addEventListener('load',()=>{
-  ['AirReservation','CarRental','HotelReservation','ETP','B2B'].forEach(id=>document.getElementById(id).dispatchEvent(new Event('change')));
-  const trip=document.querySelector('input[name="TripType"]:checked');if(trip)trip.dispatchEvent(new Event('change'));
-  ['travelerName','employeeNumber','travelerEmail','travelerPhone','homeMTC'].forEach(id=>document.getElementById(id).value=localStorage.getItem(id)||'');
-  if(navigator.vibrate){
-    document.querySelectorAll('.touch-target').forEach(l=>l.addEventListener('click',()=>navigator.vibrate(10)));
-  }
-});
-
-
-/* ---------- FORM SUBMISSION & PDF GENERATION ---------- */
-/* --------------   UNCHANGED ORIGINAL CODE   -------------- */
-/* The entire block you provided earlier remains intact below. */
-/* --------------------------------------------------------- */
-document.getElementById('travelRequestForm').addEventListener('submit',async function(event){
-    event.preventDefault();
-    const formData=new FormData(event.target);
-    const {PDFDocument}=PDFLib;
-
-    /* ------- field-name map (exactly as before) ------- */
-    const pdfFieldNames={ /* (unchanged list) */ 
-        homeMTC:'Dropdown46',travelerName:'Name',employeeNumber:'Employee#',travelerPhone:'Phone',travelerEmail:'Email',
-        trainingLocation:'Training Location',uid:'UID',travelStart:'Travel Start',travelEnd:'Travel End',
-        airReservationCheck:'Air Reservation',hotelReservationCheck:'Hotel Reservation',carRentalCheck:'Car Rental',
-        povCheck:'POV',etpCheck:'ETP',b2bCheck:'B2B',
-        roundTripCheck:'Round Trip',oneWayCheck:'One Way',
-        depAirline:'Dep Airline',depFlight:'Dep flight',depLocation:'Dep location',depArrLocation:'Dep arr location',
-        depDate:'Dep Date',depTime:'Dep Time',depArrTime:'Dep arr time',airNotes:'Air notes',
-        retAirline:'Ret airline',retFlight:'Ret flight',retDepLocation:'Ret dep location',retArrLocation:'Ret arr location',
-        retDepDate:'Ret dep date',retDepTime:'Ret dep time',retArrTime:'Ret arr time',
-        oneWayCarCheck:'One way',carPickUp:'Car pick up',carDate:'car date',carPUTime:'car p/u time',
-        carDrop:'car drop',carDropDate:'car drop date',carDropTime:'car drop time',carNotes:'car notes',
-        travelerBookedHotel:'Dropdown41',hotelCheckIn:'Hotel check in',hotelCheckOut:'Hotel check out',
-        reservNumber:'reserv #',hotelLocation:'Hotel location',hotelNotes:'Hotel Notes',
-        etpDropdown:'ETP Drop down',b2bUID:'B2B UID',comments:'Comments'
-    };
-
-    /* ------- persist traveller basics ------- */
-    ['travelerName','employeeNumber','travelerEmail','travelerPhone','homeMTC']
-      .forEach(k=>localStorage.setItem(k,formData.get(k)||''));
-
-    try{
-        const existingPdfBytes=await fetch('MyFile.pdf').then(r=>{
-            if(!r.ok)throw new Error(`Failed to fetch MyFile.pdf: ${r.statusText}`);return r.arrayBuffer();
-        });
-        const pdfDoc=await PDFDocument.load(existingPdfBytes);const form=pdfDoc.getForm();
-
-        const setText=(f,v)=>{try{if(f)form.getTextField(f).setText(v||'');}catch(e){console.warn('field',f,e);}};
-        const setDropdown=(f,v)=>{try{if(f&&v)form.getDropdown(f).select(v);}catch(e){console.warn('dropdown',f,e);}};
-        const setCheckbox=(f,c)=>{try{if(!f)return;const cb=form.getCheckBox(f);c?cb.check():cb.uncheck();}catch(e){console.warn('checkbox',f,e);}};
-        const setRadio=(g,v)=>{try{
-          const rF=pdfFieldNames.roundTripCheck,oF=pdfFieldNames.oneWayCheck;
-          if(v==='RoundTrip'){if(rF)form.getCheckBox(rF).check();if(oF)form.getCheckBox(oF).uncheck();}
-          else if(v==='OneWay'){if(oF)form.getCheckBox(oF).check();if(rF)form.getCheckBox(rF).uncheck();}
-          else{if(rF)form.getCheckBox(rF).uncheck();if(oF)form.getCheckBox(oF).uncheck();}
-        }catch(e){console.warn('radio',g,e);}};
-
-        /* ------- fill traveller info ------- */
-        setDropdown(pdfFieldNames.homeMTC,formData.get('homeMTC'));
-        setText(pdfFieldNames.travelerName,formData.get('travelerName'));
-        setText(pdfFieldNames.employeeNumber,formData.get('employeeNumber'));
-        setText(pdfFieldNames.travelerPhone,formData.get('travelerPhone'));
-        setText(pdfFieldNames.travelerEmail,formData.get('travelerEmail'));
-
-        /* event summary */
-        setText(pdfFieldNames.trainingLocation,formData.get('TrainingLocation'));
-        setText(pdfFieldNames.uid,formData.get('UID'));
-        setText(pdfFieldNames.travelStart,formData.get('TravelStart'));
-        setText(pdfFieldNames.travelEnd,formData.get('TravelEnd'));
-
-        /* requirements */
-        setCheckbox(pdfFieldNames.airReservationCheck,document.getElementById('AirReservation').checked);
-        setCheckbox(pdfFieldNames.hotelReservationCheck,document.getElementById('HotelReservation').checked);
-        setCheckbox(pdfFieldNames.carRentalCheck,document.getElementById('CarRental').checked);
-        setCheckbox(pdfFieldNames.povCheck,document.getElementById('POV').checked);
-        setCheckbox(pdfFieldNames.etpCheck,document.getElementById('ETP').checked);
-        setCheckbox(pdfFieldNames.b2bCheck,document.getElementById('B2B').checked);
-
-        /* air section */
-        if(document.getElementById('AirReservation').checked){
-            const tripVal=formData.get('TripType');setRadio('TripType',tripVal);
-            setText(pdfFieldNames.depAirline,formData.get('DepAirline'));
-            setText(pdfFieldNames.depFlight,formData.get('DepFlight'));
-            setText(pdfFieldNames.depLocation,formData.get('DepLocation'));
-            setText(pdfFieldNames.depArrLocation,formData.get('DepArrLocation'));
-            setText(pdfFieldNames.depDate,formData.get('DepDate'));
-            setText(pdfFieldNames.depTime,formData.get('DepTime'));
-            setText(pdfFieldNames.depArrTime,formData.get('DepArrTime'));
-            setText(pdfFieldNames.airNotes,formData.get('AirNotes'));
-            if(tripVal==='RoundTrip'){
-                setText(pdfFieldNames.retAirline,formData.get('RetAirline'));
-                setText(pdfFieldNames.retFlight,formData.get('RetFlight'));
-                setText(pdfFieldNames.retDepLocation,formData.get('RetDepLocation'));
-                setText(pdfFieldNames.retArrLocation,formData.get('RetArrLocation'));
-                setText(pdfFieldNames.retDepDate,formData.get('RetDepDate'));
-                setText(pdfFieldNames.retDepTime,formData.get('RetDepTime'));
-                setText(pdfFieldNames.retArrTime,formData.get('RetArrTime'));
-            }
-        }
-
-        /* car section */
-        if(document.getElementById('CarRental').checked){
-            setCheckbox(pdfFieldNames.oneWayCarCheck,document.getElementById('OneWayCar').checked);
-            setText(pdfFieldNames.carPickUp,formData.get('CarPickUp'));
-            setText(pdfFieldNames.carDate,formData.get('CarDate'));
-            setText(pdfFieldNames.carPUTime,formData.get('CarPUTime'));
-            setText(pdfFieldNames.carDrop,formData.get('CarDrop'));
-            setText(pdfFieldNames.carDropDate,formData.get('CarDropDate'));
-            setText(pdfFieldNames.carDropTime,formData.get('CarDropTime'));
-            setText(pdfFieldNames.carNotes,formData.get('CarNotes'));
-        }
-
-        /* hotel section */
-        if(document.getElementById('HotelReservation').checked){
-            setDropdown(pdfFieldNames.travelerBookedHotel,formData.get('TravelerBookedHotel'));
-            setText(pdfFieldNames.hotelCheckIn,formData.get('HotelCheckIn'));
-            setText(pdfFieldNames.hotelCheckOut,formData.get('HotelCheckOut'));
-            setText(pdfFieldNames.reservNumber,formData.get('ReservNumber'));
-            setText(pdfFieldNames.hotelLocation,formData.get('HotelLocation'));
-            setText(pdfFieldNames.hotelNotes,formData.get('HotelNotes'));
-        }
-
-        /* etp / b2b */
-        if(document.getElementById('ETP').checked){setDropdown(pdfFieldNames.etpDropdown,formData.get('ETPDropdown'));}
-        if(document.getElementById('B2B').checked){setText(pdfFieldNames.b2bUID,formData.get('B2BUID'));}
-
-        /* comments */
-        setText(pdfFieldNames.comments,formData.get('Comments'));
-
-        form.updateFieldAppearances();
-
-        /* filename */
-        const uid=formData.get('UID')?.trim().replace(/[^a-zA-Z0-9_-]/g,'')||'NO_UID';
-        const travelerName=formData.get('travelerName')?.trim()||'NO_NAME';
-        const travelStart=formData.get('TravelStart')||'';
-        let lastNameFirstInitial='UNKNOWN';
-        if(travelerName.includes(' ')){const p=travelerName.split(' ').filter(s=>s);
-          lastNameFirstInitial=`${p[p.length-1].toUpperCase()}${p[0][0].toUpperCase()}`;}
-        else if(travelerName)lastNameFirstInitial=travelerName.toUpperCase();
-        let formattedDate='NO_DATE';
-        if(travelStart){
-          try{const [y,m,d]=travelStart.split('-');
-            const dt=new Date(Date.UTC(y,m-1,d));
-            formattedDate=`${String(dt.getUTCDate()).padStart(2,'0')}_${dt.toLocaleString('en-US',{month:'short',timeZone:'UTC'}).toUpperCase()}_${String(dt.getUTCFullYear()).slice(-2)}`;
-          }catch(e){formattedDate=travelStart.replace(/-/g,'_');}
-        }
-        const fileName=`${uid}_HST_${lastNameFirstInitial}_${formattedDate}.pdf`;
-
-        const pdfBytes=await pdfDoc.save();
-        const blob=new Blob([pdfBytes],{type:'application/pdf'});const url=URL.createObjectURL(blob);
-        const a=document.createElement('a');a.href=url;a.download=fileName;document.body.appendChild(a);a.click();
-        document.body.removeChild(a);URL.revokeObjectURL(url);
-    }catch(err){console.error('PDF error:',err);alert(`Error: ${err.message}`);}
-});
-</script>
+<script src="script.js"></script>
 </body>
 </html>
