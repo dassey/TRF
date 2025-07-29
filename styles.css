@@ -86,7 +86,22 @@ input[type=date],input[type=time]{min-width:0;}
   align-items:center;
   grid-column:1/-1;
 }
-.checkbox-group label,.radio-group label{
+/* replace the combined rule with the two below */
+
+/* --- checkbox labels: --------------- */
+.checkbox-group label{
+  display:inline-flex;
+  align-items:center;
+  gap:.4rem;
+  font-size:.9rem;
+  cursor:pointer;
+  user-select:none;
+  flex:0 0 120px;   
+  min-width:120px;
+}
+
+/* --- radio labels: free width ----------------------------------------- */
+.radio-group label{
   display:inline-flex;
   align-items:center;
   gap:.4rem;
