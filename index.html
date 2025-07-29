@@ -1,171 +1,171 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Travel Request Form</title>
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Travel Request Form</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-<div class="container">
-<form id="travelRequestForm">
-  <h2>Travel Request Form</h2>
+  <div class="container">
+    <form id="travelRequestForm">
+      <h2>Travel Request Form</h2>
 
-  <div class="section-header full-width-section">Traveler Information</div>
+      <div class="section-header full-width-section">Traveler Information</div>
 
-  <div class="input-group home-mtc-container">
-    <label for="homeMTC">Home MTC</label>
-    <select id="homeMTC" name="homeMTC" autocomplete="organization">
-      <option value="" disabled selected>Select MTC</option>
-      <option>LVN</option><option>HST/MCAT</option><option>CHF</option>
-      <option>DGE</option><option>FIG</option><option>GOW</option>
-    </select>
-  </div>
-
-  <div class="input-group">
-    <label for="travelerName">Name (First Last)</label>
-    <input id="travelerName" name="travelerName" autocomplete="name" required>
-  </div>
-
-  <div class="input-group">
-    <label for="employeeNumber">Employee #</label>
-    <input id="employeeNumber" name="employeeNumber"
-           inputmode="numeric" pattern="[0-9]*" autocomplete="off">
-  </div>
-
-  <div class="input-group">
-    <label for="travelerEmail">E-mail</label>
-    <input type="email" id="travelerEmail" name="travelerEmail"
-           inputmode="email" autocomplete="email" required>
-  </div>
-
-  <div class="input-group">
-    <label for="travelerPhone">Phone</label>
-    <input type="tel" id="travelerPhone" name="travelerPhone"
-           inputmode="tel" autocomplete="tel-national">
-  </div>
-
-  <div class="section-header full-width-section">Event Summary</div>
-
-  <div class="input-group">
-    <label for="TrainingLocation">Training Location (City, ST)</label>
-    <input id="TrainingLocation" name="TrainingLocation" required>
-  </div>
-  <div class="input-group">
-    <label for="UID">UID</label>
-    <input id="UID" name="UID" required>
-  </div>
-  <div class="input-group">
-    <label for="TravelStart">Travel Start Date</label>
-    <input type="date" id="TravelStart" name="TravelStart" required>
-  </div>
-  <div class="input-group">
-    <label for="TravelEnd">Travel End Date</label>
-    <input type="date" id="TravelEnd" name="TravelEnd" required>
-  </div>
-
-  <div class="section-header full-width-section">Travel Requirements</div>
-  <div class="checkbox-group">
-    <label class="touch-target"><input type="checkbox" id="AirReservation">Air</label>
-    <label class="touch-target"><input type="checkbox" id="HotelReservation">Hotel</label>
-    <label class="touch-target"><input type="checkbox" id="CarRental">Car</label>
-    <label class="touch-target"><input type="checkbox" id="POV">POV</label>
-    <label class="touch-target"><input type="checkbox" id="ETP">ETP</label>
-    <label class="touch-target"><input type="checkbox" id="B2B">B2B</label>
-  </div>
-
-  <div class="input-group-row">
-    <div id="ETPContainer" class="input-group" style="display:none;">
-      <label for="ETPDropdown">ETP Type</label>
-      <select id="ETPDropdown" name="ETPDropdown">
-        <option>N/A</option><option>Per Diem</option><option>Rental Vehicle</option>
-        <option>Baggage</option><option>Prepositioning</option><option>Other</option>
-      </select>
-    </div>
-    <div id="B2BContainer" class="input-group" style="display:none;">
-      <label for="B2BUID">B2B UID</label>
-      <input id="B2BUID" name="B2BUID">
-    </div>
-  </div>
-
-  <div id="AirSection" class="conditional-section">
-    <div class="section-header">Air Reservation</div>
-    <div class="radio-group">
-      <label class="touch-target"><input type="radio" id="RoundTrip" name="TripType" value="RoundTrip" checked>Round Trip</label>
-      <label class="touch-target"><input type="radio" id="OneWay"   name="TripType" value="OneWay">One Way</label>
-    </div>
-
-    <div class="section-subheader">Departing Flight</div>
-    <div class="row-container">
-      <div class="input-group"><label for="DepAirline">Preferred Airline</label><input type="text" id="DepAirline" name="DepAirline"></div>
-      <div class="input-group"><label for="DepFlight">Preferred Flight #</label><input type="text" id="DepFlight" name="DepFlight"></div>
-      <div class="input-group"><label for="DepLocation">Depart Airport (Code)</label><input type="text" id="DepLocation" name="DepLocation"></div>
-      <div class="input-group"><label for="DepArrLocation">Arrive Airport (Code)</label><input type="text" id="DepArrLocation" name="DepArrLocation"></div>
-      <div class="input-group"><label for="DepDate">Date</label><input type="date" id="DepDate" name="DepDate"></div>
-      <div class="input-group"><label for="DepTime">Depart Time</label><input type="time" id="DepTime" name="DepTime"></div>
-      <div class="input-group"><label for="DepArrTime">Arrive Time</label><input type="time" id="DepArrTime" name="DepArrTime"></div>
-      <div class="input-group full-width-section"><label for="AirNotes">Air Notes (Seat preference, etc.)</label><input type="text" id="AirNotes" name="AirNotes"></div>
-    </div>
-
-    <div id="AirReturn">
-      <div class="section-subheader">Returning Flight</div>
-      <div class="row-container">
-        <div class="input-group"><label for="RetAirline">Preferred Airline</label><input type="text" id="RetAirline" name="RetAirline"></div>
-        <div class="input-group"><label for="RetFlight">Preferred Flight #</label><input type="text" id="RetFlight" name="RetFlight"></div>
-        <div class="input-group"><label for="RetDepLocation">Depart Airport (Code)</label><input type="text" id="RetDepLocation" name="RetDepLocation"></div>
-        <div class="input-group"><label for="RetArrLocation">Arrive Airport (Code)</label><input type="text" id="RetArrLocation" name="RetArrLocation"></div>
-        <div class="input-group"><label for="RetDepDate">Date</label><input type="date" id="RetDepDate" name="RetDepDate"></div>
-        <div class="input-group"><label for="RetDepTime">Depart Time</label><input type="time" id="RetDepTime" name="RetDepTime"></div>
-        <div class="input-group"><label for="RetArrTime">Arrive Time</label><input type="time" id="RetArrTime" name="RetArrTime"></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="CarSection" class="conditional-section">
-    <div class="section-header">Car Rental</div>
-    <div class="checkbox-group">
-      <label class="touch-target"><input type="checkbox" id="OneWayCar" name="OneWayCar">One Way Rental</label>
-    </div>
-    <div class="row-container">
-      <div class="input-group"><label for="CarPickUp">Pickup Location</label><input type="text" id="CarPickUp" name="CarPickUp"></div>
-      <div class="input-group"><label for="CarDate">Pickup Date</label><input type="date" id="CarDate" name="CarDate"></div>
-      <div class="input-group"><label for="CarPUTime">Pickup Time</label><input type="time" id="CarPUTime" name="CarPUTime"></div>
-      <div class="input-group"><label for="CarDrop">Drop Off Location</label><input type="text" id="CarDrop" name="CarDrop"></div>
-      <div class="input-group"><label for="CarDropDate">Drop Off Date</label><input type="date" id="CarDropDate" name="CarDropDate"></div>
-      <div class="input-group"><label for="CarDropTime">Drop Off Time</label><input type="time" id="CarDropTime" name="CarDropTime"></div>
-      <div class="input-group full-width-section"><label for="CarNotes">Car Notes (Size preference, etc.)</label><input type="text" id="CarNotes" name="CarNotes"></div>
-    </div>
-  </div>
-
-  <div id="HotelSection" class="conditional-section">
-    <div class="section-header">Hotel</div>
-    <div class="row-container">
-      <div class="input-group">
-        <label for="TravelerBookedHotel">Traveler Booked Hotel?</label>
-        <select id="TravelerBookedHotel" name="TravelerBookedHotel">
-          <option value="No" selected>No</option><option value="Yes">Yes</option>
+      <div class="input-group home-mtc-container">
+        <label for="homeMTC">Home MTC</label>
+        <select id="homeMTC" name="homeMTC" autocomplete="organization">
+          <option value="" disabled selected>Select MTC</option>
+          <option>LVN</option><option>HST/MCAT</option><option>CHF</option>
+          <option>DGE</option><option>FIG</option><option>GOW</option>
         </select>
       </div>
-      <div class="input-group"><label for="HotelCheckIn">Check-in Date</label><input type="date" id="HotelCheckIn" name="HotelCheckIn"></div>
-      <div class="input-group"><label for="HotelCheckOut">Check-out Date</label><input type="date" id="HotelCheckOut" name="HotelCheckOut"></div>
-      <div class="input-group"><label for="HotelLocation">Hotel Name / Location</label><input type="text" id="HotelLocation" name="HotelLocation"></div>
-      <div class="input-group"><label for="ReservNumber">Reservation # (if booked)</label><input type="text" id="ReservNumber" name="ReservNumber"></div>
-      <div class="input-group full-width-section"><label for="HotelNotes">Hotel Notes (Loyalty #, preferences)</label><input type="text" id="HotelNotes" name="HotelNotes"></div>
-    </div>
+
+      <div class="input-group">
+        <label for="travelerName">Name (First Last)</label>
+        <input id="travelerName" name="travelerName" autocomplete="name">
+      </div>
+
+      <div class="input-group">
+        <label for="employeeNumber">Employee #</label>
+        <input id="employeeNumber" name="employeeNumber" type="text" autocomplete="off" maxlength="12">
+      </div>
+
+      <div class="input-group">
+        <label for="travelerEmail">E-mail</label>
+        <input type="email" id="travelerEmail" name="travelerEmail" autocomplete="email">
+      </div>
+
+      <div class="input-group">
+        <label for="travelerPhone">Phone</label>
+        <input type="tel" id="travelerPhone" name="travelerPhone" inputmode="tel" autocomplete="tel-national">
+      </div>
+
+      <div class="section-header full-width-section">Event Summary</div>
+
+      <div class="input-group">
+        <label for="TrainingLocation">Training Location (City, ST)</label>
+        <input id="TrainingLocation" name="TrainingLocation">
+      </div>
+
+      <div class="input-group">
+        <label for="UID">UID</label>
+        <input id="UID" name="UID">
+      </div>
+
+      <div class="input-group">
+        <label for="TravelStart">Travel Start Date</label>
+        <input type="date" id="TravelStart" name="TravelStart">
+      </div>
+
+      <div class="input-group">
+        <label for="TravelEnd">Travel End Date</label>
+        <input type="date" id="TravelEnd" name="TravelEnd">
+      </div>
+
+      <div class="section-header full-width-section">Travel Requirements</div>
+      <div class="checkbox-group">
+        <label class="touch-target"><input type="checkbox" id="AirReservation">Air</label>
+        <label class="touch-target"><input type="checkbox" id="HotelReservation">Hotel</label>
+        <label class="touch-target"><input type="checkbox" id="CarRental">Car</label>
+        <label class="touch-target"><input type="checkbox" id="POV">POV</label>
+        <label class="touch-target"><input type="checkbox" id="ETP">ETP</label>
+        <label class="touch-target"><input type="checkbox" id="B2B">B2B</label>
+      </div>
+
+      <div class="input-group-row">
+        <div id="ETPContainer" class="input-group" style="display:none;">
+          <label for="ETPDropdown">ETP Type</label>
+          <select id="ETPDropdown" name="ETPDropdown">
+            <option>N/A</option><option>Per Diem</option><option>Rental Vehicle</option>
+            <option>Baggage</option><option>Prepositioning</option><option>Other</option>
+          </select>
+        </div>
+        <div id="B2BContainer" class="input-group" style="display:none;">
+          <label for="B2BUID">B2B UID</label>
+          <input id="B2BUID" name="B2BUID">
+        </div>
+      </div>
+
+      <div id="AirSection" class="conditional-section">
+        <div class="section-header">Air Reservation</div>
+        <div class="radio-group">
+          <label class="touch-target"><input type="radio" id="RoundTrip" name="TripType" value="RoundTrip" checked>Round Trip</label>
+          <label class="touch-target"><input type="radio" id="OneWay" name="TripType" value="OneWay">One Way</label>
+        </div>
+
+        <div class="section-subheader">Departing Flight</div>
+        <div class="row-container">
+          <div class="input-group"><label for="DepAirline">Preferred Airline</label><input type="text" id="DepAirline" name="DepAirline"></div>
+          <div class="input-group"><label for="DepFlight">Preferred Flight #</label><input type="text" id="DepFlight" name="DepFlight"></div>
+          <div class="input-group"><label for="DepLocation">Depart Airport (Code)</label><input type="text" id="DepLocation" name="DepLocation"></div>
+          <div class="input-group"><label for="DepArrLocation">Arrive Airport (Code)</label><input type="text" id="DepArrLocation" name="DepArrLocation"></div>
+          <div class="input-group"><label for="DepDate">Date</label><input type="date" id="DepDate" name="DepDate"></div>
+          <div class="input-group"><label for="DepTime">Depart Time</label><input type="time" id="DepTime" name="DepTime"></div>
+          <div class="input-group"><label for="DepArrTime">Arrive Time</label><input type="time" id="DepArrTime" name="DepArrTime"></div>
+          <div class="input-group full-width-section"><label for="AirNotes">Air Notes (Seat preference, etc.)</label><input type="text" id="AirNotes" name="AirNotes"></div>
+        </div>
+
+        <div id="AirReturn">
+          <div class="section-subheader">Returning Flight</div>
+          <div class="row-container">
+            <div class="input-group"><label for="RetAirline">Preferred Airline</label><input type="text" id="RetAirline" name="RetAirline"></div>
+            <div class="input-group"><label for="RetFlight">Preferred Flight #</label><input type="text" id="RetFlight" name="RetFlight"></div>
+            <div class="input-group"><label for="RetDepLocation">Depart Airport (Code)</label><input type="text" id="RetDepLocation" name="RetDepLocation"></div>
+            <div class="input-group"><label for="RetArrLocation">Arrive Airport (Code)</label><input type="text" id="RetArrLocation" name="RetArrLocation"></div>
+            <div class="input-group"><label for="RetDepDate">Date</label><input type="date" id="RetDepDate" name="RetDepDate"></div>
+            <div class="input-group"><label for="RetDepTime">Depart Time</label><input type="time" id="RetDepTime" name="RetDepTime"></div>
+            <div class="input-group"><label for="RetArrTime">Arrive Time</label><input type="time" id="RetArrTime" name="RetArrTime"></div>
+          </div>
+        </div>
+      </div>
+
+      <div id="CarSection" class="conditional-section">
+        <div class="section-header">Car Rental</div>
+        <div class="checkbox-group">
+          <label class="touch-target"><input type="checkbox" id="OneWayCar" name="OneWayCar">One Way Rental</label>
+        </div>
+        <div class="row-container">
+          <div class="input-group"><label for="CarPickUp">Pickup Location</label><input type="text" id="CarPickUp" name="CarPickUp"></div>
+          <div class="input-group"><label for="CarDate">Pickup Date</label><input type="date" id="CarDate" name="CarDate"></div>
+          <div class="input-group"><label for="CarPUTime">Pickup Time</label><input type="time" id="CarPUTime" name="CarPUTime"></div>
+          <div class="input-group"><label for="CarDrop">Drop Off Location</label><input type="text" id="CarDrop" name="CarDrop"></div>
+          <div class="input-group"><label for="CarDropDate">Drop Off Date</label><input type="date" id="CarDropDate" name="CarDropDate"></div>
+          <div class="input-group"><label for="CarDropTime">Drop Off Time</label><input type="time" id="CarDropTime" name="CarDropTime"></div>
+          <div class="input-group full-width-section"><label for="CarNotes">Car Notes (Size preference, etc.)</label><input type="text" id="CarNotes" name="CarNotes"></div>
+        </div>
+      </div>
+
+      <div id="HotelSection" class="conditional-section">
+        <div class="section-header">Hotel</div>
+        <div class="row-container">
+          <div class="input-group">
+            <label for="TravelerBookedHotel">Traveler Booked Hotel?</label>
+            <select id="TravelerBookedHotel" name="TravelerBookedHotel">
+              <option value="No" selected>No</option><option value="Yes">Yes</option>
+            </select>
+          </div>
+          <div class="input-group"><label for="HotelCheckIn">Check-in Date</label><input type="date" id="HotelCheckIn" name="HotelCheckIn"></div>
+          <div class="input-group"><label for="HotelCheckOut">Check-out Date</label><input type="date" id="HotelCheckOut" name="HotelCheckOut"></div>
+          <div class="input-group"><label for="HotelLocation">Hotel Name / Location</label><input type="text" id="HotelLocation" name="HotelLocation"></div>
+          <div class="input-group"><label for="ReservNumber">Reservation # (if booked)</label><input type="text" id="ReservNumber" name="ReservNumber"></div>
+          <div class="input-group full-width-section"><label for="HotelNotes">Hotel Notes (Loyalty #, preferences)</label><input type="text" id="HotelNotes" name="HotelNotes"></div>
+        </div>
+      </div>
+
+      <div class="section-header full-width-section">Comments</div>
+      <div class="input-group full-width-section">
+        <label for="Comments">Additional Comments or Special Instructions</label>
+        <textarea id="Comments" name="Comments"></textarea>
+      </div>
+
+      <div class="button-container"><button type="submit">Generate PDF</button></div>
+    </form>
   </div>
 
-  <div class="section-header full-width-section">Comments</div>
-  <div class="input-group full-width-section">
-    <label for="Comments">Additional Comments or Special Instructions</label>
-    <textarea id="Comments" name="Comments"></textarea>
-  </div>
-
-  <div class="button-container"><button type="submit">Generate PDF</button></div>
-</form>
-</div>
-
-<script src="./pdf-lib.min.js"></script>
-<script src="script.js"></script>
+  <script src="./pdf-lib.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
